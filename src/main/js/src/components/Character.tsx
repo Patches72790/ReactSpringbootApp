@@ -12,8 +12,8 @@ export const Character: React.FunctionComponent<ICharacterProps> = ({
     ac
 }) => (
     <div >
-        <p>{name}</p>
-        <p>{hp}</p>
-        <p>{ac}</p>
+        <p>Name: {name}</p>
+        <p>HP: {hp}</p>
+        <p>AC: {ac}</p>
     </div>
 )
