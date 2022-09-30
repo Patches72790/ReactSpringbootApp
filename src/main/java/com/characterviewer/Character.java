@@ -14,10 +14,9 @@ class Character {
     private int ac;
 
     Character() {
-        
     }
 
-    Character (String name) {
+    Character(String name) {
         this.name = name;
         this.hp = 10;
         this.ac = 10;

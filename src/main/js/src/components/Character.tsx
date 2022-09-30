@@ -1,17 +1,17 @@
-import React from 'react'
+import React from "react"
 
-export interface ICharacterProps  {
-name: string,
-  hp: number,
+export interface ICharacterProps {
+  name: string
+  hp: number
   ac: number
 }
 
 export const Character: React.FunctionComponent<ICharacterProps> = ({
   name,
   hp,
-  ac
+  ac,
 }) => (
-  <div >
+  <div>
     <p>Name: {name}</p>
     <p>HP: {hp}</p>
     <p>AC: {ac}</p>
