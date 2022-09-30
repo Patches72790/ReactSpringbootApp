@@ -6,6 +6,14 @@ export interface ICharacterProps  {
     ac: number
 }
 
-export const Character = ({}) => (
-    <div />
+export const Character: React.FunctionComponent<ICharacterProps> = ({
+    name,
+    hp,
+    ac
+}) => (
+    <div >
+        <p>{name}</p>
+        <p>{hp}</p>
+        <p>{ac}</p>
+    </div>
 )
