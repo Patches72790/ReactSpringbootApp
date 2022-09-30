@@ -1,18 +1,18 @@
 {
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "root": true,
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": { "project": ["./tsconfig.json"] },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["react", "@typescript-eslint"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "rules": {
-    "semicolon": true,
-    "@typescript-eslint/strict-boolean-expressions": [
-      2,
-      {
-        "allowString": false,
-        "allowNumber": false
-      }
-    ]
+    "semi": ["error", "never"],
+    "indent": ["error", 2],
+    "object-curly-newline": ["error", "always"],
+    "object-property-newline": "error"
   },
-  "ignorePatterns": ["src/**/*.test.ts", "src/frontend/generated/*"]
+  "ignorePatterns": ["src/**/*.test.ts"]
 }
