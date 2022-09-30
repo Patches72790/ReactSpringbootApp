@@ -1,0 +1,29 @@
+{
+  "scripts": {
+    "watch": "webpack --watch -d --output ./target/classes/static/built/bundle.js",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.19.3",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "axios": "^0.27.2",
+    "babel-loader": "^8.2.5",
+    "eslint": "^8.24.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-query": "^3.39.2",
+    "rest": "^2.0.0",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.8.4",
+    "webpack": "^5.74.0"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.18.6",
+    "@types/node": "^18.7.23",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "eslint_d": "^12.2.1",
+    "webpack-cli": "^4.10.0"
+  }
+}
