@@ -12,7 +12,10 @@
     "semi": ["error", "never"],
     "indent": ["error", 2],
     "object-curly-newline": ["error", "always"],
-    "object-property-newline": "error"
+    "object-property-newline": "error",
+    "max-len": ["error", 120],
+    "no-multi-spaces": "error",
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }]
   },
   "ignorePatterns": ["src/**/*.test.ts"]
 }
