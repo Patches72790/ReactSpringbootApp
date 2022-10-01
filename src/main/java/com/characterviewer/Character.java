@@ -13,6 +13,10 @@ class Character {
     private int hp;
     private int ac;
 
+    // spells
+    // armor
+    // weapons
+
     Character() {
     }
 
@@ -21,9 +25,6 @@ class Character {
         this.hp = 10;
         this.ac = 10;
     }
-    // spells
-    // armor
-    // weapons
 
     @Override
     public String toString() {
