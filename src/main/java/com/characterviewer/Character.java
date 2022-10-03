@@ -1,5 +1,6 @@
 package com.characterviewer;
 
+import com.characterviewer.CharacterComponents.Spell;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,18 +13,23 @@ class Character {
     private String name;
     private int hp;
     private int ac;
+    private Spell[] spells;
 
-    // spells
     // armor
     // weapons
 
     Character() {
     }
 
-    Character(String name) {
+    Character (String name) {
         this.name = name;
         this.hp = 10;
         this.ac = 10;
+    }
+
+    Character(String name, Spell[] spells) {
+        Character newChar = new Character(name);
+        newChar.spells = spells;
     }
 
     @Override

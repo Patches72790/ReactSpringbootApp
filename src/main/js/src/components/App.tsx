@@ -1,24 +1,32 @@
-import React from 'react'
+import React, {
+  useState 
+} from 'react'
 import _ from 'lodash'
-import { Character, ICharacterProps } from './Character'
-import Axios from '../api/axios'
-import { useQuery} from 'react-query'
+import {
+  Character
+} from './Character'
+import {
+  useCharacterMutation,
+  useCharacterQuery 
+} from '../queries/characterQuery'
 
 export const App = () => {
 
-  const characterQuery = useQuery<ICharacterProps[], Error>({
-    enabled: true,
-    queryFn: async () => fetch('http://localhost:8080/api/characters')
-      .then((data) => data.json())
-      .then(({ _embedded: { characters } }) => characters)
-      .catch(console.error),
-    queryKey: ['characters']
-  })
+  const characterQuery = useCharacterQuery()
+  const mutateCharacters = useCharacterMutation()
+  const [currentName, setCurrentName] = useState('')
+
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event)
+    setCurrentName(event.target.value)
+  }
 
   if (characterQuery.isSuccess) {
     return (
-      <div> {
-        characterQuery.data.map(({ name, hp, ac }) => (
+      <div className="character-list"> {
+        characterQuery.data.map(({
+          name, hp, ac 
+        }) => (
           <Character
             name={name}
             hp={hp}
@@ -27,6 +35,18 @@ export const App = () => {
           />
         ))
       }
+      <div className="add-character">
+        <form>
+          <input type={"text"} value={'Name'} onChange={handleNameChange}></input> 
+        </form> 
+        <button onClick={() => mutateCharacters.mutate({
+          name: currentName,
+          damage_dice: [],
+          spells: [],
+        })}>
+          {"Add a Character"}
+        </button>
+      </div>
       </div>
     )   
         
@@ -34,4 +54,3 @@ export const App = () => {
     return <div> loading characters</div>
   }
 }
-
