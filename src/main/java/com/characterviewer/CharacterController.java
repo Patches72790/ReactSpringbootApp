@@ -2,9 +2,15 @@ package com.characterviewer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.characterviewer.RequestObjects.CharacterRequest;
 import com.characterviewer.CharacterComponents.Spell;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +30,23 @@ class CharacterController {
     }
 
     @GetMapping("/characters")
-    Iterable<Character> all() {
-        return repository.findAll();
+    CollectionModel<EntityModel<Character>> all() {
+        List<EntityModel<Character>> characters = repository.findAll().stream()
+            .map(character -> EntityModel.of(character,
+                linkTo(methodOn(CharacterController.class).all()).withSelfRel(),
+                linkTo(methodOn(CharacterController.class).all()).withRel("characters")
+            ))
+            .collect(Collectors.toList());
+
+        return CollectionModel.of(characters,
+            linkTo(methodOn(CharacterController.class).all()).withSelfRel());
     }
 
-    @PostMapping(name = "/characters", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(
+        name = "/characters", 
+        consumes = { MediaType.APPLICATION_JSON_VALUE }, 
+        produces = { MediaType.APPLICATION_JSON_VALUE }
+    )
     @ResponseBody
     Character newCharacter(@RequestBody CharacterRequest charRequest) {
         String[] dice = charRequest.getDice().toArray(String[]::new);
@@ -47,9 +64,13 @@ class CharacterController {
     }
 
     @GetMapping("/characters/{id}")
-    Character one(@PathVariable Long id) {
-        return repository.findById(id)
+    EntityModel<Character> one(@PathVariable Long id) {
+        Character character = repository.findById(id)
                 .orElseThrow(() -> new CharacterException(id));
+        return EntityModel.of(character,
+                linkTo(methodOn(CharacterController.class)).withSelfRel(),
+                linkTo(methodOn(CharacterController.class)).withRel("characters")
+        );
     }
 
     @DeleteMapping("/characters/{id}")
