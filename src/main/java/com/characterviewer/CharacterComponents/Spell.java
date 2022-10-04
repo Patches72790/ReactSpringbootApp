@@ -1,16 +1,23 @@
 package com.characterviewer.CharacterComponents;
 
-import com.characterviewer.Extra.Dice;
+import java.util.ArrayList;
+import java.util.Arrays;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+
+@Entity
 public class Spell {
+    @Id
+    @GeneratedValue
     private String title;
-    private Dice damage_dice;
-    private String school;
+    private ArrayList<String> damage_dice;
 
-    Spell(String title, Dice damage_dice, String school) {
+    public Spell(String title, String[] damage_dice) {
         this.title = title;
-        this.damage_dice = damage_dice;
-        this.school = school;
+        this.damage_dice = new ArrayList<String>(Arrays.asList(damage_dice));
     }
     
     @Override

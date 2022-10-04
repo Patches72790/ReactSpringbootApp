@@ -1,4 +1,5 @@
 import React, {
+  useEffect,
   useState 
 } from 'react'
 import _ from 'lodash'
@@ -17,6 +18,8 @@ export const App = () => {
   const [currentName, setCurrentName] = useState('')
   const [currentDice, setCurrentDice] = useState('')
   const [currentSpells, setCurrentSpells] = useState('')
+
+  useEffect(() => console.log(characterQuery), [characterQuery])
 
   const handleChange = (setSetting: (val: string) => void) => 
     (event: React.ChangeEvent<HTMLInputElement>) => 

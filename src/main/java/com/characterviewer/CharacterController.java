@@ -31,11 +31,6 @@ class CharacterController {
         return repository.save(character);
     }
 
-    @PostMapping("/characters-debugger")
-    String debugPostCharacter(@RequestBody String body) {
-        return "Character body" + body;
-    }
-
     @GetMapping("/characters/{id}")
     Character one(@PathVariable Long id) {
         return repository.findById(id)

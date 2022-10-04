@@ -29,7 +29,7 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
   async ({
     name, damage_dice, spells 
   }) => 
-    fetch('http://localhost:8080/api/characters-debug', {
+    fetch('http://localhost:8080/api/characters', {
       method: 'post',
       headers: {
         'Accept': 'application/json',

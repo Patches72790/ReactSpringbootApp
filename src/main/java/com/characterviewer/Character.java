@@ -1,9 +1,12 @@
 package com.characterviewer;
 
+import java.util.ArrayList;
+
 import com.characterviewer.CharacterComponents.Spell;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 @Entity
 class Character {
@@ -13,23 +16,24 @@ class Character {
     private String name;
     private int hp;
     private int ac;
-    private Spell[] spells;
 
-    // armor
-    // weapons
+    @JoinColumn(name="spells_id")
+    private ArrayList<Spell> spells;
 
     Character() {
     }
 
-    Character (String name) {
+    Character(String name) {
         this.name = name;
         this.hp = 10;
         this.ac = 10;
     }
 
-    Character(String name, Spell[] spells) {
-        Character newChar = new Character(name);
-        newChar.spells = spells;
+    Character(String name, ArrayList<Spell> spells) {
+        this.name = name;
+        this.hp = 10;
+        this.ac = 10;
+        this.spells = spells;
     }
 
     @Override
@@ -66,4 +70,9 @@ class Character {
     public void setAc(int ac) {
         this.ac = ac;
     }
+
+    @JoinColumn(name="spells_id")
+    public ArrayList<Spell> getSpells() {
+        return spells;
+    }   
 }
