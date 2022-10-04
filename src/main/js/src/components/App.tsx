@@ -15,11 +15,12 @@ export const App = () => {
   const characterQuery = useCharacterQuery()
   const mutateCharacters = useCharacterMutation()
   const [currentName, setCurrentName] = useState('')
+  const [currentDice, setCurrentDice] = useState('')
+  const [currentSpells, setCurrentSpells] = useState('')
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event)
-    setCurrentName(event.target.value)
-  }
+  const handleChange = (setSetting: (val: string) => void) => 
+    (event: React.ChangeEvent<HTMLInputElement>) => 
+      setSetting(event.target.value)
 
   if (characterQuery.isSuccess) {
     return (
@@ -37,12 +38,28 @@ export const App = () => {
       }
       <div className="add-character">
         <form>
-          <input type={"text"} value={'Name'} onChange={handleNameChange}></input> 
+          <input 
+            type={"text"} 
+            value={currentName} 
+            onChange={handleChange(setCurrentName)}
+          />
+          <input
+            type={"text"}
+            value={currentDice}
+            placeholder={"Dice"}
+            onChange={handleChange(setCurrentDice)}
+          />
+          <input
+            type={"text"}
+            value={currentSpells}
+            placeholder={"Spells"}
+            onChange={handleChange(setCurrentSpells)}
+          />
         </form> 
         <button onClick={() => mutateCharacters.mutate({
           name: currentName,
-          damage_dice: [],
-          spells: [],
+          damage_dice: currentDice,
+          spells: currentSpells,
         })}>
           {"Add a Character"}
         </button>

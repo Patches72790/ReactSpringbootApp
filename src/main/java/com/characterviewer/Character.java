@@ -35,8 +35,8 @@ class Character {
     @Override
     public String toString() {
         return String.format(
-                "Character[id=%d, name=%s]",
-                id, name);
+                "Character[id=%d, name=%s, spells=%s]",
+                id, name, spells);
     }
 
     public Long getId() {

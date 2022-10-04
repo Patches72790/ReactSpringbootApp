@@ -21,15 +21,15 @@ const useCharacterQuery = () => useQuery<ICharacterProps[], Error>({
 
 export interface INewCharacter {
     name?: string;
-    damage_dice?: string[];
-    spells?: string[];
+    damage_dice?: string[] | string;
+    spells?: string[] | string;
 }
 
 const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
   async ({
     name, damage_dice, spells 
   }) => 
-    fetch('http://localhost:8080/api/characters', {
+    fetch('http://localhost:8080/api/characters-debug', {
       method: 'post',
       headers: {
         'Accept': 'application/json',
