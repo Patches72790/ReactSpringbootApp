@@ -5,8 +5,7 @@ for keeping track of Character sheet data in Dungeons and Dragons.
 
 ### Eventual List of Features
 
-*   \[ ] Java Rest API for storing Character sheet data for users
+*   \[ ] Java Rest API for storing and retrieving haracter sheet data for users
 *   \[ ] TypeScript front end interface for viewing different characters and adding new characters
-*   \[ ] Stretch goal of adding automated deployment
-*   \[ ] Adding unit testing for different backend routes
-*   \[ ] Adding React testing for front end interface
+*   \[ ] Stretch goal of adding automated deployment and docker containerization
+*   \[ ] Adding testing for different backend routes and front end interface
