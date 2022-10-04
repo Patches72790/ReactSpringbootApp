@@ -1,5 +1,10 @@
 package com.characterviewer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import com.characterviewer.RequestObjects.CharacterRequest;
+import com.characterviewer.CharacterComponents.Spell;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +32,19 @@ class CharacterController {
       consumes = { MediaType.APPLICATION_JSON_VALUE }, 
       produces = { MediaType.APPLICATION_JSON_VALUE }
     )
-    Character newCharacter(@RequestBody Character character) {
-        return repository.save(character);
+    Character newCharacter(@RequestBody CharacterRequest charRequest) {
+        ArrayList<String> dice = charRequest.getDamageDice();
+        ArrayList<String> spells = charRequest.getSpells();
+        String name = charRequest.getName();
+
+        ArrayList<Spell> charSpells = new ArrayList<Spell>(Arrays.asList(spells
+            .stream()
+            .map(spellString -> new Spell(spellString, dice))
+            .toArray(Spell[]::new)));
+
+        Character newCharacter = new Character(name, charSpells);
+
+        return repository.save(newCharacter);
     }
 
     @GetMapping("/characters/{id}")

@@ -21,8 +21,8 @@ const useCharacterQuery = () => useQuery<ICharacterProps[], Error>({
 
 export interface INewCharacter {
     name?: string;
-    damage_dice?: string[] | string;
-    spells?: string[] | string;
+    damage_dice?: string;
+    spells?: string;
 }
 
 const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
@@ -37,8 +37,8 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
       },
       body: JSON.stringify({
         name, 
-        damage_dice,
-        spells
+        damage_dice: damage_dice.length ? damage_dice.split(',') : [],
+        spells: spells.length ? spells.split(',') : []
       }) 
     })
       .then((result) => result.json())
