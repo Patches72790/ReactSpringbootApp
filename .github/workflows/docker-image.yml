@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag character-viewer-app:latest --build_arg JAR_FILE="./target/*.jar"
+      run: docker build . --file Dockerfile --tag build/character-viewer-app --build-arg JAR_FILE="./target/*.jar"
