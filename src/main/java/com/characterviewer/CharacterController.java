@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,20 +28,18 @@ class CharacterController {
         return repository.findAll();
     }
 
-    @PostMapping(
-      value = "/characters", 
-      consumes = { MediaType.APPLICATION_JSON_VALUE }, 
-      produces = { MediaType.APPLICATION_JSON_VALUE }
-    )
+    @PostMapping(name = "/characters", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    @ResponseBody
     Character newCharacter(@RequestBody CharacterRequest charRequest) {
-        String dice = String.join(",", charRequest.getDamageDice());
+        String[] dice = charRequest.getDice().toArray(String[]::new);
         ArrayList<String> spells = charRequest.getSpells();
         String name = charRequest.getName();
 
         ArrayList<Spell> charSpells = new ArrayList<Spell>(Arrays.asList(spells
-            .stream()
-            .map(spellString -> new Spell(spellString, dice))
-            .toArray(Spell[]::new)));
+                .stream()
+                .map(spellString -> new Spell(spellString, dice))
+                .toArray(Spell[]::new)));
 
         Character newCharacter = new Character(name, charSpells);
 

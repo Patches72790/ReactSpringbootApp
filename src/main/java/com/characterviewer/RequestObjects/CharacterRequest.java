@@ -2,29 +2,43 @@ package com.characterviewer.RequestObjects;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.Serializable;
 
-public class CharacterRequest {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class CharacterRequest implements Serializable {
+    @JsonProperty("name")
     private String name;
-    private ArrayList<String> damage_dice;
-    private ArrayList<String> spells;
+
+    @JsonProperty("dice")
+    private String[] dice;
+
+    @JsonProperty("spells")
+    private String[] spells;
+
+    @JsonProperty("hp")
+    private int hp;
+
+    @JsonProperty("ac")
+    private int ac;
 
     CharacterRequest(String name, 
-            String[] damage_dice, 
+            String[] dice, 
             String[] spells) {
         this.name = name;
-        this.damage_dice = new ArrayList<String>(Arrays.asList(damage_dice));
-        this.spells = new ArrayList<String>(Arrays.asList(spells));
+        this.dice = dice;
+        this.spells = spells;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public ArrayList<String> getDamageDice() {
-        return this.damage_dice;
+    public ArrayList<String> getDice() {
+        return new ArrayList<String>(Arrays.asList(dice));
     }
 
     public ArrayList<String> getSpells() {
-        return this.spells;
+        return new ArrayList<String>(Arrays.asList(this.spells));
     }
 }

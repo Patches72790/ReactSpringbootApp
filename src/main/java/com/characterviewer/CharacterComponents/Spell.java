@@ -1,16 +1,17 @@
 package com.characterviewer.CharacterComponents;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Spell {
+public class Spell implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
     private String spell;
-    private String damage_dice;
+    private String[] damage_dice;
 
     public Spell() {
     }
@@ -19,7 +20,7 @@ public class Spell {
         this.spell = name;
     }
 
-    public Spell(String spell, String damage_dice) {
+    public Spell(String spell, String[] damage_dice) {
         this.spell = spell;
         this.damage_dice = damage_dice;
     }
@@ -31,7 +32,7 @@ public class Spell {
                 this.spell);
     }
 
-    public String getDice() {
+    public String[] getDice() {
         return this.damage_dice;
     }
 }

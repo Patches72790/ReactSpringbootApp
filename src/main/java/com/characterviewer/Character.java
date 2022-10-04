@@ -1,23 +1,21 @@
 package com.characterviewer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.characterviewer.CharacterComponents.Spell;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 
 @Entity
-class Character {
+class Character implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
     private int hp;
     private int ac;
-
-    @JoinColumn(name="spells_id")
     private ArrayList<Spell> spells;
 
     Character() {
@@ -71,7 +69,6 @@ class Character {
         this.ac = ac;
     }
 
-    @JoinColumn(name="spells_id")
     public ArrayList<Spell> getSpells() {
         return spells;
     }   

@@ -21,27 +21,39 @@ const useCharacterQuery = () => useQuery<ICharacterProps[], Error>({
 
 export interface INewCharacter {
     name?: string;
-    damage_dice?: string;
+    dice?: string;
     spells?: string;
+    hp?: string;
+    ac?: string;
 }
 
 const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
   async ({
-    name, damage_dice, spells 
+    name, 
+    dice, 
+    spells,
+    hp,
+    ac,
   }) => 
     fetch('http://localhost:8080/api/characters', {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         name, 
-        damage_dice: damage_dice.length ? damage_dice.split(',') : [],
-        spells: spells.length ? spells.split(',') : []
+        dice: dice.split(','),
+        spells: spells.split(','),
+        hp,
+        ac
       }) 
     })
-      .then((result) => result.json())
+      .then( async(result) => {
+        const json = await result.json()
+        console.log(json)
+        return json
+      })
       .catch(() => console.error('Error uploading character')),
   {
     mutationKey: 'upload-character',

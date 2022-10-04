@@ -1,5 +1,6 @@
 import React, {
   useEffect,
+  useMemo,
   useState 
 } from 'react'
 import _ from 'lodash'
@@ -18,12 +19,29 @@ export const App = () => {
   const [currentName, setCurrentName] = useState('')
   const [currentDice, setCurrentDice] = useState('')
   const [currentSpells, setCurrentSpells] = useState('')
+  const [currentHp, setCurrentHp] = useState('10')
+  const [currentAc, setCurrentAc] = useState('10')
 
   useEffect(() => console.log(characterQuery), [characterQuery])
 
-  const handleChange = (setSetting: (val: string) => void) => 
-    (event: React.ChangeEvent<HTMLInputElement>) => 
-      setSetting(event.target.value)
+  const handleChange = 
+    ((setSetting: (val: string) => void) => 
+      (event: React.ChangeEvent<HTMLInputElement>) => 
+        setSetting(event.target.value))
+
+  const canSubmitCharacter: boolean = useMemo(() =>
+    currentName.length > 0 &&
+      currentSpells.length > 0 &&
+      currentDice.length > 0 &&
+      currentHp.length > 0 &&
+      currentAc.length > 0
+  , [
+    currentName,
+    currentDice,
+    currentSpells,
+    currentHp,
+    currentAc
+  ])
 
   if (characterQuery.isSuccess) {
     return (
@@ -58,12 +76,28 @@ export const App = () => {
             placeholder={"Spells"}
             onChange={handleChange(setCurrentSpells)}
           />
+          <input
+            type={"text"}
+            value={currentAc}
+            placeholder={"AC"}
+            onChange={handleChange(setCurrentAc)}
+          />
+          <input
+            type={"text"}
+            value={currentHp}
+            placeholder={"HP"}
+            onChange={handleChange(setCurrentHp)}
+          />
         </form> 
-        <button onClick={() => mutateCharacters.mutate({
-          name: currentName,
-          damage_dice: currentDice,
-          spells: currentSpells,
-        })}>
+        <button 
+          disabled={!canSubmitCharacter}
+          onClick={() => mutateCharacters.mutate({
+            name: currentName,
+            dice: currentDice,
+            spells: currentSpells,
+            ac: currentAc,
+            hp: currentHp,
+          })}>
           {"Add a Character"}
         </button>
       </div>
