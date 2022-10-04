@@ -1,10 +1,10 @@
-package com.example.payroll;
+package com.characterviewer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PayrollApplicationTests {
+class CharacterViewerApplicationTests {
 
 	@Test
 	void contextLoads() {
