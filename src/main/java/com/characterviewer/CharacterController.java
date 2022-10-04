@@ -33,7 +33,7 @@ class CharacterController {
       produces = { MediaType.APPLICATION_JSON_VALUE }
     )
     Character newCharacter(@RequestBody CharacterRequest charRequest) {
-        ArrayList<String> dice = charRequest.getDamageDice();
+        String dice = String.join(",", charRequest.getDamageDice());
         ArrayList<String> spells = charRequest.getSpells();
         String name = charRequest.getName();
 
