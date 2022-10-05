@@ -36,7 +36,8 @@ RUN npm run build
 # create java jar
 RUN mvn clean install
 
-EXPOSE $PORT
+ARG HEROKU_PORT
+ENV PORT ${HEROKU_PORT}
 
-#CMD ["mvn", "spring-boot:run"]
-CMD ["java", "-jar", "/app/target/characterviewerapp.jar"]
+CMD java -Dserver.port=${PORT} -jar /app/target/characterviewerapp.jar 
+# CMD ["java", "-Dserver.port=$PORT", "-jar", "/app/target/characterviewerapp.jar"]
