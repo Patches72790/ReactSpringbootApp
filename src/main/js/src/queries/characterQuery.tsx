@@ -5,15 +5,21 @@ import {
 import {
   ICharacterProps 
 } from '../components/Character'
+import Axios from '../api/axios'
 
 const useCharacterQuery = () => useQuery<ICharacterProps[], Error>({
   enabled: true,
-  queryFn: async () => fetch('http://localhost:8080/api/characters')
-    .then((data) => data.json())
+  queryFn: async () => Axios.get('/api/characters') //fetch('http://localhost:8080/api/characters')
+    .then(data => {
+      console.log(data)
+      return data
+    })
     .then(({
-      _embedded: {
-        characters 
-      } 
+      data: {
+        _embedded: {
+          characters 
+        } 
+      }
     }) => characters)
     .catch(console.error),
   queryKey: ['characters']
@@ -35,7 +41,8 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
     hp,
     ac,
   }) => 
-    fetch('http://localhost:8080/api/characters', {
+    Axios.post('/api/characters/', {
+    //fetch('http://localhost:8080/api/characters', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -49,10 +56,10 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
         ac
       }) 
     })
-      .then( async(result) => {
-        const json = await result.json()
-        console.log(json)
-        return json
+      .then( async({
+        data 
+      }) => {
+        return data
       })
       .catch(() => console.error('Error uploading character')),
   {

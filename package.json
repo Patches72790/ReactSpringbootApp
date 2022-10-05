@@ -1,7 +1,8 @@
 {
   "scripts": {
     "watch": "webpack --watch -d --output ./target/classes/static/built/bundle.js",
-    "build": "webpack"
+    "build": "webpack",
+    "dev": "NODE_ENV=development webpack"
   },
   "dependencies": {
     "@babel/preset-env": "^7.19.3",
@@ -9,6 +10,7 @@
     "@typescript-eslint/parser": "^5.38.1",
     "axios": "^0.27.2",
     "babel-loader": "^8.2.5",
+    "dotenv": "^16.0.3",
     "eslint": "^8.24.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0",

@@ -1,4 +1,8 @@
-const path = require('path')
+const path = require('path');
+const webpack = require('webpack');
+const dotenv = require('dotenv')
+
+dotenv.config({path: './.env'})
 
 module.exports = {
     entry: './src/main/js/src/index.tsx',
@@ -39,5 +43,12 @@ module.exports = {
             path.join(__dirname, 'node_modules')
         ],
         extensions: ['.ts', '.tsx', '.js', '.jsx']
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env.PORT': JSON.stringify(process.env.PORT),
+            'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        })
+    ]
 };
