@@ -1,5 +1,8 @@
 FROM ubuntu:latest
 
+ARG HEROKU_PORT
+ENV PORT ${HEROKU_PORT}
+
 RUN apt-get update && \
     apt-get install -y openjdk-17-jdk-headless \
                     maven \
@@ -10,6 +13,7 @@ RUN apt-get update && \
 WORKDIR /app
 ENV APP_ROOT=/app
 ENV APP_NAME="characterviewerapp"
+ENV DOMAIN_NAME="https://characterviewerapp.herokuapp.com"
 
 # Add java dependency file
 COPY ./pom.xml /app/pom.xml
@@ -31,13 +35,10 @@ COPY ./webpack.config.js /app/webpack.config.js
 COPY ./tsconfig.json /app/tsconfig.json
 COPY ./src /app/src/
 RUN npm --yes -f install
-RUN npm run build
+RUN PORT=${PORT} DOMAIN=${DOMAIN_NAME} npm run build
 
 # create java jar
 RUN mvn clean install
-
-ARG HEROKU_PORT
-ENV PORT ${HEROKU_PORT}
 
 CMD java -Dserver.port=${PORT} -jar /app/target/characterviewerapp.jar 
 # CMD ["java", "-Dserver.port=$PORT", "-jar", "/app/target/characterviewerapp.jar"]
