@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build -tag build/characterviewerapp .
+      run: docker build --tag build/characterviewerapp .
 
     # todo - add deploy key for setting up AWS ECS deployment
     # deploy: ...
