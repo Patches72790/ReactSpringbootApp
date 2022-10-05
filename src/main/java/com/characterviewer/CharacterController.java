@@ -9,27 +9,26 @@ import com.characterviewer.RequestObjects.CharacterRequest;
 import com.characterviewer.CharacterComponents.Spell;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/characters")
+@RepositoryRestController
 class CharacterController {
     private final CharacterRepository repository;
 
+    @Autowired
     CharacterController(CharacterRepository repository) {
         this.repository = repository;
     }
 
-    @GetMapping("/")
+    @RequestMapping(method = RequestMethod.GET, value = "/characters")
+    @ResponseBody
     CollectionModel<EntityModel<Character>> all() {
         List<EntityModel<Character>> characters = repository.findAll().stream()
             .map(character -> EntityModel.of(character,
@@ -42,20 +41,21 @@ class CharacterController {
             linkTo(methodOn(CharacterController.class).all()).withSelfRel());
     }
 
-    @PostMapping()
-    Character newCharacter(@RequestBody CharacterRequest charRequest) {
-        String[] dice = charRequest.getDice().toArray(String[]::new);
-        ArrayList<String> spells = charRequest.getSpells();
-        String name = charRequest.getName();
+    @RequestMapping(method = RequestMethod.POST, value = "/characters")
+    public Character postCharacter(@RequestBody CharacterRequest charRequest) {
+        System.out.println(charRequest);
+//        String[] dice = charRequest.getDice(); //.toArray(String[]::new);
+//        ArrayList<String> spells = charRequest.getSpells();
+//        String name = charRequest.getName();
+//
+//        ArrayList<Spell> charSpells = new ArrayList<Spell>(Arrays.asList(spells
+//                .stream()
+//                .map(spellString -> new Spell(spellString, dice))
+//                .toArray(Spell[]::new)));
 
-        ArrayList<Spell> charSpells = new ArrayList<Spell>(Arrays.asList(spells
-                .stream()
-                .map(spellString -> new Spell(spellString, dice))
-                .toArray(Spell[]::new)));
+//        Character newCharacter = new Character(name, charSpells);
 
-        Character newCharacter = new Character(name, charSpells);
-
-        return repository.save(newCharacter);
+        return repository.save(new Character());
     }
 
     @GetMapping("/{id}")

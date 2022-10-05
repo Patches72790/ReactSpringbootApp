@@ -9,14 +9,13 @@ import org.springframework.context.annotation.Bean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 public class CharacterViewerApplication {
     private static final Logger log = LoggerFactory.getLogger(CharacterViewerApplication.class);
-    private static final ObjectMapper mapper = new ObjectMapper();
 
     public static void main(String[] args) {
-        mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         SpringApplication.run(CharacterViewerApplication.class, args);
     }
 
