@@ -12,24 +12,11 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    
-      #    - name: Setup java version
-      #      uses: actions/setup-java@v3.0.0
-      #      with:
-      #        java-version: ${{ env.JAVA_VERSION }}
-      #        distribution: ${{ env.DISTRIBUTION }}
-      #        cache: 'maven'
-      #    
-      #    - name: Build with maven
-      #      run: mvn clean install
-    
     - name: Build the Docker image
       run: docker build -tag build/characterviewerapp .
 
