@@ -36,5 +36,7 @@ RUN npm run build
 # create java jar
 RUN mvn clean install
 
+EXPOSE $PORT
+
 #CMD ["mvn", "spring-boot:run"]
 CMD ["java", "-jar", "/app/target/characterviewerapp.jar"]
