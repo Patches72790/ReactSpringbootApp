@@ -30,7 +30,7 @@ COPY ./package.json /app/package.json
 COPY ./webpack.config.js /app/webpack.config.js
 COPY ./tsconfig.json /app/tsconfig.json
 COPY ./src /app/src/
-RUN --mount=type=cache,target=/root/npm/.cache NODE_ENV=development npm --yes -f install
+RUN npm --yes -f install
 RUN npm run build
 
 # create java jar
