@@ -11,17 +11,17 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/characters")
 class CharacterController {
     private final CharacterRepository repository;
 
@@ -29,7 +29,7 @@ class CharacterController {
         this.repository = repository;
     }
 
-    @GetMapping("/characters")
+    @GetMapping("/")
     CollectionModel<EntityModel<Character>> all() {
         List<EntityModel<Character>> characters = repository.findAll().stream()
             .map(character -> EntityModel.of(character,
@@ -42,12 +42,7 @@ class CharacterController {
             linkTo(methodOn(CharacterController.class).all()).withSelfRel());
     }
 
-    @PostMapping(
-        name = "/characters", 
-        consumes = { MediaType.APPLICATION_JSON_VALUE }, 
-        produces = { MediaType.APPLICATION_JSON_VALUE }
-    )
-    @ResponseBody
+    @PostMapping()
     Character newCharacter(@RequestBody CharacterRequest charRequest) {
         String[] dice = charRequest.getDice().toArray(String[]::new);
         ArrayList<String> spells = charRequest.getSpells();
@@ -63,7 +58,7 @@ class CharacterController {
         return repository.save(newCharacter);
     }
 
-    @GetMapping("/characters/{id}")
+    @GetMapping("/{id}")
     EntityModel<Character> one(@PathVariable Long id) {
         Character character = repository.findById(id)
                 .orElseThrow(() -> new CharacterException(id));
@@ -73,7 +68,7 @@ class CharacterController {
         );
     }
 
-    @DeleteMapping("/characters/{id}")
+    @DeleteMapping("/{id}")
     void deleteCharacter(@PathVariable Long id) {
         repository.deleteById(id);
     }
