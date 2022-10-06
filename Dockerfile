@@ -1,5 +1,6 @@
 FROM ubuntu:latest
 
+# dynamically bind heroku port to docker build file
 ARG HEROKU_PORT
 ENV PORT ${HEROKU_PORT}
 
@@ -35,10 +36,10 @@ COPY ./webpack.config.js /app/webpack.config.js
 COPY ./tsconfig.json /app/tsconfig.json
 COPY ./src /app/src/
 RUN npm --yes -f install
+# port and domain must be passed into webpack at compilation
 RUN PORT=${PORT} DOMAIN=${DOMAIN_NAME} npm run build
 
 # create java jar
 RUN mvn clean install
 
 CMD java -Dserver.port=${PORT} -jar /app/target/characterviewerapp.jar 
-# CMD ["java", "-Dserver.port=$PORT", "-jar", "/app/target/characterviewerapp.jar"]
