@@ -13,7 +13,9 @@ const queryClient = new QueryClient()
 
 const AppWrap = () => (
   <QueryClientProvider client={queryClient}>
-    <App />
+    <div className="container">
+      <App />
+    </div>
   </QueryClientProvider>
 )
 

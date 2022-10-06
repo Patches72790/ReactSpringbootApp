@@ -2,14 +2,18 @@ import {
   useMutation,
   useQuery 
 } from 'react-query'
-import {
-  ICharacterProps 
-} from '../components/Character'
 import Axios from '../api/axios'
 
-const useCharacterQuery = () => useQuery<ICharacterProps[], Error>({
+export interface ICharacterQuery {
+  name: string;
+  id: string;
+  hp: number;
+  ac: number;
+}
+
+const useCharacterQuery = () => useQuery<ICharacterQuery[], Error>({
   enabled: true,
-  queryFn: async () => Axios.get('/api/characters') //fetch('http://localhost:8080/api/characters')
+  queryFn: async () => Axios.get('/api/characters')
     .then(data => {
       console.log(data)
       return data
@@ -42,7 +46,6 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
     ac,
   }) => 
     Axios.post('/api/characters/', {
-    //fetch('http://localhost:8080/api/characters', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
