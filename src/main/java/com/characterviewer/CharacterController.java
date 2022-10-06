@@ -29,6 +29,7 @@ class CharacterController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/characters")
     @ResponseBody
+    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     CollectionModel<EntityModel<Character>> all() {
         List<EntityModel<Character>> characters = repository.findAll().stream()
             .map(character -> EntityModel.of(character,
@@ -42,6 +43,7 @@ class CharacterController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/characters")
+    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     public Character postCharacter(@RequestBody CharacterRequest charRequest) {
         System.out.println(charRequest);
 //        String[] dice = charRequest.getDice(); //.toArray(String[]::new);
@@ -59,6 +61,7 @@ class CharacterController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     EntityModel<Character> one(@PathVariable Long id) {
         Character character = repository.findById(id)
                 .orElseThrow(() -> new CharacterException(id));
@@ -69,6 +72,7 @@ class CharacterController {
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     void deleteCharacter(@PathVariable Long id) {
         repository.deleteById(id);
     }
