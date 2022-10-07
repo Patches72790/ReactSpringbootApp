@@ -7,57 +7,28 @@ import {
 } from '../../hooks/useSpellsFilter'
 
 export interface ISelectSpellsProps {
-   addSpell: (spell: ISpell) => void
+   addSpell: (spell: ISpell) => void;
+   selectedSpells: ISpell[];
 }
 
 export const SelectSpells: React.FunctionComponent<ISelectSpellsProps> = 
 ({
-  addSpell
+  addSpell,
+  selectedSpells,
 }) => {
 
   const [filterInput, setFilterInput]= useState('')
   const spells = useSpellsFilter({
-    filterInput
+    filterInput,
+    selectedSpells
   })
   const handleChange = 
     ((setSetting: (val: string) => void) => 
       (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => 
         setSetting(event.target.value))
-            
+
   return (
     <div className={"input-group"}>
-      <div 
-        className={"input-group-prepend"}
-      >
-        <button 
-          className={"btn btn-secondary dropdown-toggle"}
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-        >
-          {"Spells List"}
-        </button>
-        <div className={"dropdown-menu"}>
-          {(spells.length && (spells
-            .map(({
-              name,
-              identifier
-            }) => 
-              <a 
-                className={"dropdown-item"}
-                key={`${name}-key`}
-                onClick={() => addSpell({
-                  name,
-                  identifier
-                })}
-              >
-                {name}
-              </a>
-            )
-          )
-          ) || <div>{"No Spells Selected"}</div>} 
-        </div>
-      </div>
       <input 
         type={"text"}
         value={filterInput}
@@ -65,6 +36,31 @@ export const SelectSpells: React.FunctionComponent<ISelectSpellsProps> =
         className={'form-control'}
         onChange={handleChange(setFilterInput)}
       />
+      <div>
+        <ul className={'list-group'}>
+          {(spells?.length 
+            && filterInput.length 
+            && (spells
+              .slice(0, 10) // limit to 10 results
+              .map(({
+                name,
+                identifier
+              }) => 
+                <li 
+                  className={'list-group-item'}
+                  key={`${name}-key`}
+                  onClick={() => addSpell({
+                    name,
+                    identifier
+                  })}
+                >
+                  {name}
+                </li>
+              )
+            )
+          ) || <li className={'list-group-item'}>{"No Spells Selected"}</li>} 
+        </ul>
+      </div>
     </div>
   )
 }

@@ -1,9 +1,16 @@
 import {
+  useMemo 
+} from 'react'
+import {
+  SelectSpells 
+} from '../components/Character/SelectSpells'
+import {
   useSpellQuery 
 } from "../queries/spellsQuery"
 
 export type IUseSpellsFilter = ( params: {
-  filterInput: string
+  filterInput: string,
+  selectedSpells: ISpell[]
 }) => ISpell[]
 
 export type ISpell = {
@@ -12,23 +19,31 @@ export type ISpell = {
 }
 
 export const useSpellsFilter: IUseSpellsFilter = ({
-  filterInput
+  filterInput,
+  selectedSpells,
 }) => {
 
   const spellQuery = useSpellQuery()
 
-  if (!spellQuery.isSuccess) {
-    return []
-  } else{
+  if (spellQuery.isSuccess && spellQuery.data.results) {
     return spellQuery.data.results.filter(({
       name
-    }) => name.toLowerCase().startsWith(filterInput.toLowerCase().trim()))
+    }) => name
+      .toLowerCase()
+      .startsWith(
+        filterInput.toLowerCase()) &&
+        !selectedSpells.some(({
+          name: selectedName 
+        }) => name === selectedName)      
+    )
       .map(({
         name,
         index
       }) => ({
         name,
         identifier: index
-      }))
+      })) 
+  } else {
+    return []
   }
 }

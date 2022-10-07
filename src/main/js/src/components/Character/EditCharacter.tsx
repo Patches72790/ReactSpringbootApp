@@ -97,6 +97,7 @@ export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
         <div className={"row mb-3"}>
           <SelectSpells
             addSpell={addSpell}
+            selectedSpells={currentSpells}
           />
         </div>
       </form> 
@@ -107,10 +108,11 @@ export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
           {
             currentSpells.map(({
               name
-            }) => (
+            }, index) => (
               <li
                 key={`list-${name}-key`}
                 className={'list-group-item'}
+                onClick={() => removeSpell(index)}
               >
                 {name}
               </li>
