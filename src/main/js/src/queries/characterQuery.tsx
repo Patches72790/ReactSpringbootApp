@@ -3,12 +3,15 @@ import {
   useQuery 
 } from 'react-query'
 import Axios from '../api/axios'
+import {
+  ISpell 
+} from '../hooks/useSpellsFilter'
 
 export interface ICharacterQuery {
   name: string;
   id: string;
-  hp: number;
-  ac: number;
+  characterClass: string;
+  spells: ISpell[];
 }
 
 const useCharacterQuery = () => useQuery<ICharacterQuery[], Error>({

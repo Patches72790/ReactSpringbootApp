@@ -28,15 +28,17 @@ export const SelectSpells: React.FunctionComponent<ISelectSpellsProps> =
         setSetting(event.target.value))
 
   return (
-    <div className={"input-group"}>
-      <input 
-        type={"text"}
-        value={filterInput}
-        placeholder={"Search for a Spell"}
-        className={'form-control'}
-        onChange={handleChange(setFilterInput)}
-      />
-      <div>
+    <div className={"row input-group mb-3"}>
+      <div className={"col"}>
+        <input 
+          type={"text"}
+          value={filterInput}
+          placeholder={"Search for a Spell"}
+          className={'form-control'}
+          onChange={handleChange(setFilterInput)}
+        />
+      </div>
+      <div className={"col-6"}>
         <ul className={'list-group'}>
           {(spells?.length 
             && filterInput.length 
@@ -58,7 +60,13 @@ export const SelectSpells: React.FunctionComponent<ISelectSpellsProps> =
                 </li>
               )
             )
-          ) || <li className={'list-group-item'}>{"No Spells Selected"}</li>} 
+          ) || 
+        <li 
+          className={'list-group-item'}
+        >
+          {"No Spells Selected"}
+        </li>
+          }
         </ul>
       </div>
     </div>

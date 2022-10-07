@@ -1,10 +1,4 @@
 import {
-  useMemo 
-} from 'react'
-import {
-  SelectSpells 
-} from '../components/Character/SelectSpells'
-import {
   useSpellQuery 
 } from "../queries/spellsQuery"
 

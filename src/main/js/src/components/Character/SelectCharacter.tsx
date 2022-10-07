@@ -11,10 +11,12 @@ import {
 
 export interface ICharacterSelectProps {
   name: string,
+  characterClass: string;
 }
 
 export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = ({
   name,
+  characterClass,
 }) => { 
 
   const mutateCharacters = useCharacterMutation()
@@ -57,6 +59,7 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
         <EditCharacter 
           mutateCharacters={mutateCharacters}
           classQuery={classQueryResult}
+          characterClass={characterClass}
         />
       </div>
     </div>
