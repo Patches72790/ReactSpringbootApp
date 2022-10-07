@@ -31,19 +31,15 @@ const useCharacterQuery = () => useQuery<ICharacterQuery[], Error>({
 
 export interface INewCharacter {
     name?: string;
-    dice?: string;
-    spells?: string;
-    hp?: string;
-    ac?: string;
+    spells?: string[];
+    characterClass?: string;
 }
 
 const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
   async ({
     name, 
-    dice, 
     spells,
-    hp,
-    ac,
+    characterClass
   }) => 
     Axios.post('/api/characters/', {
       method: 'POST',
@@ -53,10 +49,8 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
       },
       body: JSON.stringify({
         name, 
-        dice: dice.split(','),
-        spells: spells.split(','),
-        hp,
-        ac
+        spells: spells.join(','),
+        characterClass
       }) 
     })
       .then( async({

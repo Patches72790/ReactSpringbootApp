@@ -16,6 +16,7 @@ export interface ISpellsQuery {
 
 const useSpellQuery = () => useQuery<ISpellsQuery, Error>({
   enabled: true,
+  staleTime: Infinity,
   queryFn: async () => axiosDndClient.get<ISpellsQuery>('/spells')
     .then(response => response.data), 
   queryKey: ['spells-query'],
