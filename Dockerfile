@@ -20,15 +20,13 @@ ENV DOMAIN_NAME="https://characterviewerapp.herokuapp.com"
 COPY ./pom.xml /app/pom.xml
 
 # install node and npm dependencies
-ARG NODE_VERSION=16.7.1
+ARG NODE_VERSION=16.17.1
 ARG NODE_PACKAGE=node-v${NODE_VERSION}-linux-x64
 ARG NODE_HOME=/opt/${NODE_PACKAGE}
 ENV NODE_PATH ${NODE_HOME}/lib/node_modules
 ENV PATH ${NODE_HOME}/bin:$PATH
 
 RUN curl https://nodejs.org/dist/v$NODE_VERSION/$NODE_PACKAGE.tar.gz | tar -xzC /opt/
-RUN node --version
-RUN npm --version
 
 # install npm deps and build
 COPY ./package.json /app/package.json
