@@ -8,6 +8,9 @@ import {
 import {
   useClassQuery
 } from '../../queries/classQuery'
+import {
+  Link 
+} from "react-router-dom"
 
 export interface ICharacterSelectProps {
   name: string,
@@ -45,12 +48,14 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
         </button>
       </div>
       <div className={"col"}>
-        <button 
-          type="button" 
-          className="btn btn-primary"
-        >
-          {"View"}
-        </button>
+        <Link to={`view/${name}`}>
+          <button 
+            type="button" 
+            className="btn btn-primary"
+          >
+            {"View"}
+          </button>
+        </Link>
       </div>
       <div 
         className={"collapse col-6"}
