@@ -21,15 +21,17 @@ import {
 export interface IEditCharacterProps {
   mutateCharacters: UseMutationResult<void, Error, INewCharacter, unknown>;
   classQuery: UseQueryResult<IClassQuery, Error>;
+  characterClass: string;
 }
 
 export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
   mutateCharacters,
   classQuery,
+  characterClass
 }) => {
   const [currentName, setCurrentName] = useState('')
   const [currentSpells, setCurrentSpells] = useState<ISpell[]>([])
-  const [currentClass, setCurrentClass] = useState('')
+  const [currentClass, setCurrentClass] = useState(characterClass || 'Barbarian')
 
   const handleChange = 
     ((setSetting: (val: string) => void) => 
@@ -78,7 +80,7 @@ export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
             placeholder={"Select Class"}
             className={'form-control custom-select'}
             onChange={handleChange(setCurrentClass)}
-            value={currentClass || 'Select Class'}
+            value={currentClass}
           >
             {
               classQuery.isSuccess && classQuery.data.results.map(({
@@ -94,11 +96,10 @@ export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
             }
           </select>
         </div>
-        <div className={"row mb-3"}>
-          <SelectSpells
-            addSpell={addSpell}
-          />
-        </div>
+        <SelectSpells
+          addSpell={addSpell}
+          selectedSpells={currentSpells}
+        />
       </form> 
       <div className={"row mb-3 selected-spells"}>
         <ul 
@@ -107,10 +108,11 @@ export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
           {
             currentSpells.map(({
               name
-            }) => (
+            }, index) => (
               <li
                 key={`list-${name}-key`}
                 className={'list-group-item'}
+                onClick={() => removeSpell(index)}
               >
                 {name}
               </li>

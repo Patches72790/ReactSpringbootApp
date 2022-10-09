@@ -38,6 +38,10 @@ img {
   border: 0;
 }
 
+.title-text {
+  text-align: center;
+}
+
 .select-character {
   display: flex;
   justify-content: space-between;

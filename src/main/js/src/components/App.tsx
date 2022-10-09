@@ -14,16 +14,18 @@ export const App = () => {
   if (characterQuery.isSuccess) {
     return (
       <>
-        <h1 className="display-4"> 
+        <h1 className="display-4 title-text"> 
           {"Character Viewer and Spell Tracker"} 
         </h1>
         <div className="character-list list-group container"> {
           characterQuery.data.map(({
-            name
+            name,
+            characterClass
           }) => (
             <SelectCharacter
               name={name}
               key={`${name}${_.uniqueId()}`}
+              characterClass={characterClass}
             />
           ))
         }

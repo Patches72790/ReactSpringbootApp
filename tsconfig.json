@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "noEmit": false,
+    "declaration": true,
+    "noEmit": true,
     "noImplicitAny": true,
     "module": "es2022",
     "target": "es6",

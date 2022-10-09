@@ -8,13 +8,18 @@ import {
 import {
   useClassQuery
 } from '../../queries/classQuery'
+import {
+  Link 
+} from "react-router-dom"
 
 export interface ICharacterSelectProps {
   name: string,
+  characterClass: string;
 }
 
 export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = ({
   name,
+  characterClass,
 }) => { 
 
   const mutateCharacters = useCharacterMutation()
@@ -43,12 +48,14 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
         </button>
       </div>
       <div className={"col"}>
-        <button 
-          type="button" 
-          className="btn btn-primary"
-        >
-          {"View"}
-        </button>
+        <Link to={`view/${name}`}>
+          <button 
+            type="button" 
+            className="btn btn-primary"
+          >
+            {"View"}
+          </button>
+        </Link>
       </div>
       <div 
         className={"collapse col-6"}
@@ -57,6 +64,7 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
         <EditCharacter 
           mutateCharacters={mutateCharacters}
           classQuery={classQueryResult}
+          characterClass={characterClass}
         />
       </div>
     </div>
