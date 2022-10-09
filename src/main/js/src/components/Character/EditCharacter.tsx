@@ -22,14 +22,16 @@ export interface IEditCharacterProps {
   mutateCharacters: UseMutationResult<void, Error, INewCharacter, unknown>;
   classQuery: UseQueryResult<IClassQuery, Error>;
   characterClass: string;
+  characterName: string;
 }
 
 export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
   mutateCharacters,
   classQuery,
-  characterClass
+  characterClass,
+  characterName,
 }) => {
-  const [currentName, setCurrentName] = useState('')
+  const [currentName, setCurrentName] = useState(characterName || '')
   const [currentSpells, setCurrentSpells] = useState<ISpell[]>([])
   const [currentClass, setCurrentClass] = useState(characterClass || 'Barbarian')
 

@@ -1,9 +1,7 @@
 package com.characterviewer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-import com.characterviewer.CharacterComponents.Spell;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,23 +12,19 @@ class Character implements Serializable {
     @GeneratedValue
     private Long id;
     private String name;
-    private int hp;
-    private int ac;
-    private ArrayList<Spell> spells;
+    private String characterClass;
+    private String[] spells;
 
     Character() {
     }
 
     Character(String name) {
         this.name = name;
-        this.hp = 10;
-        this.ac = 10;
     }
 
-    Character(String name, ArrayList<Spell> spells) {
+    Character(String name, String characterClass, String[] spells) {
         this.name = name;
-        this.hp = 10;
-        this.ac = 10;
+        this.characterClass = characterClass;
         this.spells = spells;
     }
 
@@ -53,23 +47,19 @@ class Character implements Serializable {
         this.name = name;
     }
 
-    public int getHp() {
-        return this.hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public int getAc() {
-        return this.ac;
-    }
-
-    public void setAc(int ac) {
-        this.ac = ac;
-    }
-
-    public ArrayList<Spell> getSpells() {
+    public String[] getSpells() {
         return spells;
     }   
+
+    public void setSpells(String[] spells) {
+        this.spells = spells;
+    }   
+    public String getCharacterClass() {
+        return this.characterClass;
+    }
+
+    public void setCharacterClass(String characterClass) {
+        this.characterClass = characterClass;
+    }
+
 }

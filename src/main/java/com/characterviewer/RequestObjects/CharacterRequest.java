@@ -1,61 +1,53 @@
 package com.characterviewer.RequestObjects;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
 import java.io.Serializable;
-import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class CharacterRequest implements Serializable {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("dice")
-    private ArrayList<String> dice;
+    @JsonProperty("characterClass")
+    private String characterClass;
 
     @JsonProperty("spells")
-    private ArrayList<String> spells;
+    private String[] spells;
 
-    @JsonProperty("hp")
-    private int hp;
-
-    @JsonProperty("ac")
-    private int ac;
-
-    @Autowired
+    //@Autowired
     CharacterRequest(String name,
-            String dice,
-            String spells,
-            ObjectMapper objectMapper) {
+            String characterClass,
+            String[] spells) {
         this.name = name;
+        this.characterClass = characterClass;
+        this.spells = spells;
 
-        try {
-            String [] diceList = objectMapper.readValue(dice, String[].class);
-            this.dice = new ArrayList<>(Arrays.asList(diceList));
-            String[] spellList = objectMapper.readValue(spells, String[].class);
-            this.spells = new ArrayList<>(Arrays.asList(spellList));
-        } catch (Exception e) {
-
-        }
+        System.out.println("\n\n the name and character class ");
+        System.out.printf("%s, %s", name, characterClass);
     }
 
     public String getName() {
         return this.name;
     }
 
-    public ArrayList<String> getDice() {
-        return dice;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public ArrayList<String> getSpells() {
+    public String getCharacterClass() {
+        return this.characterClass;
+    }
+
+    public void setCharacterClass(String characterClass) {
+        this.characterClass = characterClass;
+    }
+
+    public String[] getSpells() {
         return spells;
+    }
+
+    public void setSpells(String[] spells) {
+        this.spells = spells;
     }
 }

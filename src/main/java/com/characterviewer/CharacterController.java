@@ -1,21 +1,16 @@
 package com.characterviewer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.characterviewer.RequestObjects.CharacterRequest;
-import com.characterviewer.CharacterComponents.Spell;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 
 @RepositoryRestController
@@ -42,22 +37,18 @@ class CharacterController {
             linkTo(methodOn(CharacterController.class).all()).withSelfRel());
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/characters")
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
+    @ResponseBody
+    @PostMapping("/characters")
     public Character postCharacter(@RequestBody CharacterRequest charRequest) {
-        System.out.println(charRequest);
-//        String[] dice = charRequest.getDice(); //.toArray(String[]::new);
-//        ArrayList<String> spells = charRequest.getSpells();
-//        String name = charRequest.getName();
-//
-//        ArrayList<Spell> charSpells = new ArrayList<Spell>(Arrays.asList(spells
-//                .stream()
-//                .map(spellString -> new Spell(spellString, dice))
-//                .toArray(Spell[]::new)));
+        String[] spells = charRequest.getSpells();
+        String name = charRequest.getName();
+        String charClass = charRequest.getCharacterClass();
 
-//        Character newCharacter = new Character(name, charSpells);
+        Character newCharacter = new Character(name, charClass, spells);
 
-        return repository.save(new Character());
+        System.out.println(newCharacter);
+        return repository.save(newCharacter);
     }
 
     @GetMapping("/{id}")

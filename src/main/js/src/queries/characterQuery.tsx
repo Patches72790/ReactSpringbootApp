@@ -52,7 +52,7 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
       },
       body: JSON.stringify({
         name, 
-        spells: spells.join(','),
+        spells,
         characterClass
       }) 
     })

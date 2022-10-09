@@ -65,6 +65,7 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
           mutateCharacters={mutateCharacters}
           classQuery={classQueryResult}
           characterClass={characterClass}
+          characterName={name}
         />
       </div>
     </div>
