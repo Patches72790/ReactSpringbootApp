@@ -20,7 +20,7 @@ ENV DOMAIN_NAME="https://characterviewerapp.herokuapp.com"
 COPY ./pom.xml /app/pom.xml
 
 # install node and npm dependencies
-ARG NODE_VERSION=12.22.0
+ARG NODE_VERSION=16.7.1
 ARG NODE_PACKAGE=node-v${NODE_VERSION}-linux-x64
 ARG NODE_HOME=/opt/${NODE_PACKAGE}
 ENV NODE_PATH ${NODE_HOME}/lib/node_modules
@@ -35,7 +35,7 @@ COPY ./package.json /app/package.json
 COPY ./esbuild.prod.js /app/esbuild.prod.js
 COPY ./tsconfig.json /app/tsconfig.json
 COPY ./src /app/src/
-RUN npm --yes -f install
+RUN npm --yes install
 # port and domain must be passed into webpack at compilation
 RUN PORT=${PORT} DOMAIN=${DOMAIN_NAME} npm run build
 
