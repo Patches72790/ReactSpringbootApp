@@ -32,7 +32,7 @@ RUN npm --version
 
 # install npm deps and build
 COPY ./package.json /app/package.json
-COPY ./webpack.config.js /app/webpack.config.js
+COPY ./esbuild.prod.js /app/esbuild.prod.js
 COPY ./tsconfig.json /app/tsconfig.json
 COPY ./src /app/src/
 RUN npm --yes -f install

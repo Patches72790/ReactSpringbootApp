@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "tsc && NODE_ENV=development node esbuild.config.js",
-    "build": "tsc && node esbuild.config.js"
+    "build": "tsc && node esbuild.prod.js"
   },
   "dependencies": {
     "@babel/preset-env": "^7.19.3",
