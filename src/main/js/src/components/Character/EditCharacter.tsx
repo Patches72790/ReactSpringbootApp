@@ -23,6 +23,7 @@ export interface IEditCharacterProps {
   classQuery: UseQueryResult<IClassQuery, Error>;
   characterClass: string;
   characterName: string;
+  spells: ISpell[];
 }
 
 export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
@@ -30,9 +31,10 @@ export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
   classQuery,
   characterClass,
   characterName,
+  spells,
 }) => {
   const [currentName, setCurrentName] = useState(characterName || '')
-  const [currentSpells, setCurrentSpells] = useState<ISpell[]>([])
+  const [currentSpells, setCurrentSpells] = useState<ISpell[]>(spells || [])
   const [currentClass, setCurrentClass] = useState(characterClass || 'Barbarian')
 
   const handleChange = 

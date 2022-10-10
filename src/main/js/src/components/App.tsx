@@ -20,12 +20,14 @@ export const App = () => {
         <div className="character-list list-group container"> {
           characterQuery.data.map(({
             name,
-            characterClass
+            characterClass,
+            spells,
           }) => (
             <SelectCharacter
               name={name}
               key={`${name}${_.uniqueId()}`}
               characterClass={characterClass}
+              spells={spells}
             />
           ))
         }

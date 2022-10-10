@@ -13,16 +13,19 @@ class Character implements Serializable {
     private Long id;
     private String name;
     private String characterClass;
-    private String[] spells;
+    private String spells;
 
     Character() {
+        this.name = "";
+        this.characterClass = "";
+        this.spells = "";
     }
 
     Character(String name) {
         this.name = name;
     }
 
-    Character(String name, String characterClass, String[] spells) {
+    Character(String name, String characterClass, String spells) {
         this.name = name;
         this.characterClass = characterClass;
         this.spells = spells;
@@ -47,11 +50,11 @@ class Character implements Serializable {
         this.name = name;
     }
 
-    public String[] getSpells() {
+    public String getSpells() {
         return spells;
     }   
 
-    public void setSpells(String[] spells) {
+    public void setSpells(String spells) {
         this.spells = spells;
     }   
     public String getCharacterClass() {

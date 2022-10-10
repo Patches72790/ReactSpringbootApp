@@ -22,8 +22,8 @@ public class CharacterViewerApplication {
     @Bean
     public CommandLineRunner go(CharacterRepository repo) {
         return (args) -> {
-            repo.save(new Character("Alphonse"));
-            repo.save(new Character("Stradivarius"));
+            repo.save(new Character("Alphonse", "Sorcerer", "fireball"));
+            repo.save(new Character("Stradivarius", "Wizard", "lightning-bolt"));
             
             log.info("All characters found:");
             log.info("---------------------");

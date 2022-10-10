@@ -11,15 +11,18 @@ import {
 import {
   Link 
 } from "react-router-dom"
+import { ISpell } from "../../hooks/useSpellsFilter"
 
 export interface ICharacterSelectProps {
   name: string,
   characterClass: string;
+  spells: ISpell[];
 }
 
 export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = ({
   name,
   characterClass,
+  spells,
 }) => { 
 
   const mutateCharacters = useCharacterMutation()
@@ -58,7 +61,7 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
         </Link>
       </div>
       <div 
-        className={"collapse col-6"}
+        className={"collapse row"}
         id={`collapseEditCharacter-${name}`}
       >
         <EditCharacter 
@@ -66,6 +69,7 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
           classQuery={classQueryResult}
           characterClass={characterClass}
           characterName={name}
+          spells={spells}
         />
       </div>
     </div>

@@ -1,9 +1,10 @@
 package com.characterviewer.RequestObjects;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class CharacterRequest implements Serializable {
     @JsonProperty("name")
@@ -13,12 +14,11 @@ public class CharacterRequest implements Serializable {
     private String characterClass;
 
     @JsonProperty("spells")
-    private String[] spells;
+    private ArrayList<String> spells;
 
-    //@Autowired
     CharacterRequest(String name,
             String characterClass,
-            String[] spells) {
+            ArrayList<String> spells) {
         this.name = name;
         this.characterClass = characterClass;
         this.spells = spells;
@@ -43,11 +43,11 @@ public class CharacterRequest implements Serializable {
         this.characterClass = characterClass;
     }
 
-    public String[] getSpells() {
+    public ArrayList<String> getSpells() {
         return spells;
     }
 
-    public void setSpells(String[] spells) {
+    public void setSpells(ArrayList<String> spells) {
         this.spells = spells;
     }
 }

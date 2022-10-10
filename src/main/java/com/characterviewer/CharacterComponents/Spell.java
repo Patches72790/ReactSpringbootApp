@@ -10,29 +10,28 @@ public class Spell implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    private String spell;
-    private String[] damage_dice;
+    private String name;
 
     public Spell() {
+        this.name = "";
     }
 
     public Spell(String name) {
-        this.spell = name;
-    }
-
-    public Spell(String spell, String[] damage_dice) {
-        this.spell = spell;
-        this.damage_dice = damage_dice;
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Spell[title=%s]",
-                this.spell);
+                "Spell[name=%s]",
+                this.name);
     }
 
-    public String[] getDice() {
-        return this.damage_dice;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

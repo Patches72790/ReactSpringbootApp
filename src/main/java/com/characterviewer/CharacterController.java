@@ -1,19 +1,19 @@
 package com.characterviewer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.characterviewer.RequestObjects.CharacterRequest;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@RepositoryRestController
+@RestController
+@RequestMapping("/api")
 class CharacterController {
     private final CharacterRepository repository;
 
@@ -23,46 +23,44 @@ class CharacterController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/characters")
-    @ResponseBody
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
-    CollectionModel<EntityModel<Character>> all() {
-        List<EntityModel<Character>> characters = repository.findAll().stream()
-            .map(character -> EntityModel.of(character,
-                linkTo(methodOn(CharacterController.class).all()).withSelfRel(),
-                linkTo(methodOn(CharacterController.class).all()).withRel("characters")
-            ))
-            .collect(Collectors.toList());
-
-        return CollectionModel.of(characters,
-            linkTo(methodOn(CharacterController.class).all()).withSelfRel());
+    ResponseEntity<List<Character>> all() {
+        return ResponseEntity.ok(repository.findAll());
     }
 
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
-    @ResponseBody
     @PostMapping("/characters")
     public Character postCharacter(@RequestBody CharacterRequest charRequest) {
-        String[] spells = charRequest.getSpells();
+        ArrayList<String> spells = charRequest.getSpells();
         String name = charRequest.getName();
         String charClass = charRequest.getCharacterClass();
 
-        Character newCharacter = new Character(name, charClass, spells);
+        String spellString = spells.stream().collect(Collectors.joining(","));
+
+        Character newCharacter = new Character(name, charClass, spellString);
 
         System.out.println(newCharacter);
         return repository.save(newCharacter);
     }
-
-    @GetMapping("/{id}")
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
-    EntityModel<Character> one(@PathVariable Long id) {
-        Character character = repository.findById(id)
-                .orElseThrow(() -> new CharacterException(id));
-        return EntityModel.of(character,
-                linkTo(methodOn(CharacterController.class)).withSelfRel(),
-                linkTo(methodOn(CharacterController.class)).withRel("characters")
-        );
+    @PutMapping("/characters")
+    public Character newCharacter(@RequestBody CharacterRequest characterRequest) {
+
+        return new Character();
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/characters/{id}")
+    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
+    ResponseEntity<Character> one(@PathVariable Long id) {
+        try {
+            var character = repository.findById(id);
+            return ResponseEntity.ok(character.get());
+        } catch (Exception e) {
+            throw new CharacterException(id);
+        }
+    }
+
+    @DeleteMapping("/characters/{id}")
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     void deleteCharacter(@PathVariable Long id) {
         repository.deleteById(id);
