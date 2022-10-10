@@ -4,6 +4,7 @@ import {
 } from './EditCharacter'
 import {
   useCharacterMutation,
+  useCharacterUpdate,
   useDeleteCharacterQuery
 } from '../../queries/characterQuery'
 import {
@@ -34,7 +35,7 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
 }) => { 
 
   const queryClient = useQueryClient()
-  const mutateCharacters = useCharacterMutation(queryClient)
+  const mutateCharacters = useCharacterUpdate(queryClient)
   const deleteCharacter = useDeleteCharacterQuery(queryClient)
   const classQueryResult = useClassQuery()
 
@@ -89,6 +90,7 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
           characterClass={characterClass}
           characterName={name}
           spells={spells}
+          id={id}
         />
       </div>
     </div>

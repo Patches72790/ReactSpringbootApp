@@ -40,4 +40,4 @@ RUN PORT=${PORT} DOMAIN=${DOMAIN_NAME} npm run build
 # create java jar
 RUN mvn clean install
 
-CMD java -Dserver.port=${PORT} -jar /app/target/characterviewerapp.jar 
+CMD java -Dserver.port=${PORT} -jar /app/target/characterviewerapp.jar

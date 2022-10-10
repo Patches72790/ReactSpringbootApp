@@ -1,14 +1,12 @@
 package com.characterviewer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.characterviewer.RequestObjects.CharacterRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,9 +48,24 @@ public class CharacterController {
 
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     @PutMapping("/characters")
-    public Character updateCharacter(@RequestBody CharacterRequest characterRequest) {
+    public ResponseEntity<Character> updateCharacter(@RequestBody CharacterRequest characterRequest) {
+        var charId = characterRequest.getId();
 
-        return new Character();
+        var characterToUpdate= repository.findById(charId);
+        if (characterToUpdate.isEmpty()) {
+            throw new CharacterException(charId);
+        }
+
+        var character = characterToUpdate.get();
+        character.setCharacterClass(characterRequest.getCharacterClass());
+        character.setName(characterRequest.getName());
+        character.setSpells(
+            characterRequest.getSpells().stream()
+                    .collect(Collectors.joining(","))
+        );
+        var updatedCharacter = repository.save(character);
+
+        return ResponseEntity.ok(updatedCharacter);
     }
 
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})

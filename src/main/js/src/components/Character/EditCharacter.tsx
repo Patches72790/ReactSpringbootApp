@@ -24,6 +24,7 @@ export interface IEditCharacterProps {
   characterClass: string;
   characterName: string;
   spells: ISpell[];
+  id: string;
 }
 
 export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
@@ -32,6 +33,7 @@ export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
   characterClass,
   characterName,
   spells,
+  id,
 }) => {
   const [currentName, setCurrentName] = useState(characterName || '')
   const [currentSpells, setCurrentSpells] = useState<ISpell[]>(spells || [])
@@ -133,7 +135,8 @@ export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
           spells: currentSpells.map(({
             identifier
           }) => identifier),
-          characterClass: currentClass
+          characterClass: currentClass,
+          id
         })}>
         {"Save Changes"}
       </button>

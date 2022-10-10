@@ -48,6 +48,7 @@ export interface INewCharacter {
     name?: string;
     spells?: string[];
     characterClass?: string;
+    id?: string;
 }
 
 const useCharacterMutation = (queryClient: QueryClient) => useMutation<void, Error, INewCharacter>(
@@ -81,11 +82,12 @@ const useCharacterMutation = (queryClient: QueryClient) => useMutation<void, Err
   }
 )
 
-const useCharacterUpdate = (queryClient: QueryClient) => useMutation<void, Error, INewCharacter>(
+export const useCharacterUpdate = (queryClient: QueryClient) => useMutation<void, Error, INewCharacter>(
   async ({
     name, 
     spells,
-    characterClass
+    characterClass,
+    id,
   }) => 
     Axios.request( 
       {
@@ -98,7 +100,8 @@ const useCharacterUpdate = (queryClient: QueryClient) => useMutation<void, Error
         data: {
           name, 
           spells,
-          characterClass
+          characterClass,
+          id
         }
       }
     )

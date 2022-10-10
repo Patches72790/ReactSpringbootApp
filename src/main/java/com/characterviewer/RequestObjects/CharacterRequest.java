@@ -7,6 +7,10 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CharacterRequest implements Serializable {
+
+    @JsonProperty("id")
+    private Long id;
+
     @JsonProperty("name")
     private String name;
 
@@ -20,14 +24,17 @@ public class CharacterRequest implements Serializable {
         this.name = "";
         this.characterClass = "";
         this.spells = new ArrayList<>();
+        this.id = 0L;
     }
 
     public CharacterRequest(String name,
             String characterClass,
-            ArrayList<String> spells) {
+            ArrayList<String> spells,
+            Long id) {
         this.name = name;
         this.characterClass = characterClass;
         this.spells = spells;
+        this.id = id;
 
         System.out.println("\n\n the name and character class ");
         System.out.printf("%s, %s", name, characterClass);
@@ -55,5 +62,13 @@ public class CharacterRequest implements Serializable {
 
     public void setSpells(ArrayList<String> spells) {
         this.spells = spells;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -37,6 +37,7 @@ export const NewCharacter = () => {
           characterClass={''}
           characterName={''}
           spells={[]}
+          id={""}
         />
       </div>
     </div>
