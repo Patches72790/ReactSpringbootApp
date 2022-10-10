@@ -75,7 +75,28 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
       .catch(() => console.error('Error uploading character')),
   {
     mutationKey: 'upload-character',
-  })
+  }
+)
+
+export const useDeleteCharacterQuery = () => useMutation<void, Error, string>(
+  async(
+    id
+  ) =>
+    Axios.delete('/api/characters', {
+      method: 'delete',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify({
+        id,
+      })
+    }),
+  {
+    mutationKey: 'delete-character',
+    onError: () => console.error('Error deleting character')
+  },
+)
 
 export {
   useCharacterQuery,

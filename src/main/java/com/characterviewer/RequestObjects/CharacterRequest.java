@@ -16,7 +16,7 @@ public class CharacterRequest implements Serializable {
     @JsonProperty("spells")
     private ArrayList<String> spells;
 
-    CharacterRequest(String name,
+    public CharacterRequest(String name,
             String characterClass,
             ArrayList<String> spells) {
         this.name = name;

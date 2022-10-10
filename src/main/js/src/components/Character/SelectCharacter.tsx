@@ -4,6 +4,7 @@ import {
 } from './EditCharacter'
 import {
   useCharacterMutation,
+  useDeleteCharacterQuery
 } from '../../queries/characterQuery'
 import {
   useClassQuery
@@ -11,9 +12,12 @@ import {
 import {
   Link 
 } from "react-router-dom"
-import { ISpell } from "../../hooks/useSpellsFilter"
+import {
+  ISpell 
+} from "../../hooks/useSpellsFilter"
 
 export interface ICharacterSelectProps {
+  id: string,
   name: string,
   characterClass: string;
   spells: ISpell[];
@@ -23,9 +27,11 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
   name,
   characterClass,
   spells,
+  id,
 }) => { 
 
   const mutateCharacters = useCharacterMutation()
+  const deleteCharacter = useDeleteCharacterQuery()
   const classQueryResult = useClassQuery()
 
   return (
@@ -59,6 +65,15 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
             {"View"}
           </button>
         </Link>
+      </div>
+      <div className={'col'}>
+        <button
+          className={'btn btn-primary'}
+          type="button"
+          onClick={() => deleteCharacter.mutate(id)}
+        >
+          {"Delete"}
+        </button>
       </div>
       <div 
         className={"collapse row"}

@@ -8,13 +8,14 @@ import java.util.stream.Collectors;
 import com.characterviewer.RequestObjects.CharacterRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/api")
-class CharacterController {
+public class CharacterController {
     private final CharacterRepository repository;
 
     @Autowired
@@ -22,15 +23,15 @@ class CharacterController {
         this.repository = repository;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/characters")
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
+    @RequestMapping(method = RequestMethod.GET, value = "/characters")
     ResponseEntity<List<Character>> all() {
         return ResponseEntity.ok(repository.findAll());
     }
 
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     @PostMapping("/characters")
-    public Character postCharacter(@RequestBody CharacterRequest charRequest) {
+    public ResponseEntity<Character> postCharacter(@RequestBody CharacterRequest charRequest) {
         ArrayList<String> spells = charRequest.getSpells();
         String name = charRequest.getName();
         String charClass = charRequest.getCharacterClass();
@@ -40,8 +41,11 @@ class CharacterController {
         Character newCharacter = new Character(name, charClass, spellString);
 
         System.out.println(newCharacter);
-        return repository.save(newCharacter);
+        var characterResponse = repository.save(newCharacter);
+
+        return ResponseEntity.ok(characterResponse);
     }
+
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     @PutMapping("/characters")
     public Character newCharacter(@RequestBody CharacterRequest characterRequest) {
@@ -49,20 +53,20 @@ class CharacterController {
         return new Character();
     }
 
-    @GetMapping("/characters/{id}")
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
+    @GetMapping("/characters/{id}")
     ResponseEntity<Character> one(@PathVariable Long id) {
-        try {
-            var character = repository.findById(id);
-            return ResponseEntity.ok(character.get());
-        } catch (Exception e) {
-            throw new CharacterException(id);
+        var character = repository.findById(id);
+        if (character.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        return ResponseEntity.ok(character.get());
     }
 
-    @DeleteMapping("/characters/{id}")
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
+    @RequestMapping(method = RequestMethod.DELETE, value = "/characters/{id}")
     void deleteCharacter(@PathVariable Long id) {
+        System.out.println("in delete route");
         repository.deleteById(id);
     }
 }

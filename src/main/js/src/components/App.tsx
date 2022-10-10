@@ -22,15 +22,22 @@ export const App = () => {
             name,
             characterClass,
             spells,
+            id,
           }) => (
             <SelectCharacter
               name={name}
               key={`${name}${_.uniqueId()}`}
               characterClass={characterClass}
               spells={spells}
+              id={id}
             />
           ))
         }
+        </div>
+        <div className={'row'}>
+          <button className={'btn btn-primary'}>
+            {'New Character'}
+          </button>
         </div>
       </>
     )   
