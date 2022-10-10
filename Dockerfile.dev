@@ -1,9 +1,5 @@
 FROM ubuntu:latest
 
-# dynamically bind heroku port to docker build file
-ARG HEROKU_PORT
-ENV PORT ${HEROKU_PORT}
-
 RUN apt-get update && \
     apt-get install -y openjdk-17-jdk-headless \
                     maven \
@@ -14,7 +10,7 @@ RUN apt-get update && \
 WORKDIR /app
 ENV APP_ROOT=/app
 ENV APP_NAME="characterviewerapp"
-ENV DOMAIN_NAME="https://characterviewerapp.herokuapp.com"
+ENV PORT="8080"
 
 # Add java dependency file
 COPY ./pom.xml /app/pom.xml
@@ -30,12 +26,12 @@ RUN curl https://nodejs.org/dist/v$NODE_VERSION/$NODE_PACKAGE.tar.gz | tar -xzC 
 
 # install npm deps and build
 COPY ./package.json /app/package.json
-COPY ./esbuild.prod.js /app/esbuild.prod.js
+COPY ./esbuild.config.js /app/esbuild.config.js
 COPY ./tsconfig.json /app/tsconfig.json
 COPY ./src /app/src/
 RUN npm --yes install
 # port and domain must be passed into webpack at compilation
-RUN PORT=${PORT} DOMAIN=${DOMAIN_NAME} npm run build
+RUN PORT=${PORT} npm run dev
 
 # create java jar
 RUN mvn clean install

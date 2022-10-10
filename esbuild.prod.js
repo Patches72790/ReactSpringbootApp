@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 
 dotenv.config({path: './.env'})
 
+console.log(process.env.NODE_ENV)
 esbuild.build({
   entryPoints: ['./src/main/js/src'],
   outfile: './src/main/resources/static/built/bundle.js',

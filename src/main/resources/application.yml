@@ -3,7 +3,21 @@ spring:
     port: ${PORT:8080}
   application:
     name: CharacterViewerApp
-  data:
-    rest:
-      base-path: "/api"
 # examples to add datasource for db uri
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+  datasource:
+    url: jdbc:h2:mem:charviewer
+    name: username
+    password: password
+    #url: jdbc:postgresql://localhost:5432/characters
+    #name: charactersuser
+    #password: password
+    # TODO look into issues with loading into heroku postgres instance
+    #url: jdbc:postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    #name: ${DB_USER}
+    #password: ${DB_PASSWORD}

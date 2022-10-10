@@ -1,25 +1,19 @@
 package com.characterviewer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.characterviewer.RequestObjects.CharacterRequest;
-import com.characterviewer.CharacterComponents.Spell;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 
-@RepositoryRestController
-class CharacterController {
+@RestController
+@RequestMapping("/api")
+public class CharacterController {
     private final CharacterRepository repository;
 
     @Autowired
@@ -27,53 +21,68 @@ class CharacterController {
         this.repository = repository;
     }
 
+    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     @RequestMapping(method = RequestMethod.GET, value = "/characters")
-    @ResponseBody
-    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
-    CollectionModel<EntityModel<Character>> all() {
-        List<EntityModel<Character>> characters = repository.findAll().stream()
-            .map(character -> EntityModel.of(character,
-                linkTo(methodOn(CharacterController.class).all()).withSelfRel(),
-                linkTo(methodOn(CharacterController.class).all()).withRel("characters")
-            ))
-            .collect(Collectors.toList());
-
-        return CollectionModel.of(characters,
-            linkTo(methodOn(CharacterController.class).all()).withSelfRel());
+    ResponseEntity<List<Character>> all() {
+        return ResponseEntity.ok(repository.findAll());
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/characters")
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
-    public Character postCharacter(@RequestBody CharacterRequest charRequest) {
-        System.out.println(charRequest);
-//        String[] dice = charRequest.getDice(); //.toArray(String[]::new);
-//        ArrayList<String> spells = charRequest.getSpells();
-//        String name = charRequest.getName();
-//
-//        ArrayList<Spell> charSpells = new ArrayList<Spell>(Arrays.asList(spells
-//                .stream()
-//                .map(spellString -> new Spell(spellString, dice))
-//                .toArray(Spell[]::new)));
+    @PostMapping("/characters")
+    public ResponseEntity<Character> createNewCharacter(@RequestBody CharacterRequest charRequest) {
+        ArrayList<String> spells = charRequest.getSpells();
+        String name = charRequest.getName();
+        String charClass = charRequest.getCharacterClass();
 
-//        Character newCharacter = new Character(name, charSpells);
+        System.out.println(charRequest.getName());
+        String spellString = spells.stream().collect(Collectors.joining(","));
 
-        return repository.save(new Character());
+        Character newCharacter = new Character(name, charClass, spellString);
+
+        var characterResponse = repository.save(newCharacter);
+
+        System.out.println(characterResponse);
+
+        return ResponseEntity.ok(characterResponse);
     }
 
-    @GetMapping("/{id}")
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
-    EntityModel<Character> one(@PathVariable Long id) {
-        Character character = repository.findById(id)
-                .orElseThrow(() -> new CharacterException(id));
-        return EntityModel.of(character,
-                linkTo(methodOn(CharacterController.class)).withSelfRel(),
-                linkTo(methodOn(CharacterController.class)).withRel("characters")
+    @PutMapping("/characters")
+    public ResponseEntity<Character> updateCharacter(@RequestBody CharacterRequest characterRequest) {
+        var charId = characterRequest.getId();
+
+        var characterToUpdate= repository.findById(charId);
+        if (characterToUpdate.isEmpty()) {
+            throw new CharacterException(charId);
+        }
+
+        var character = characterToUpdate.get();
+        character.setCharacterClass(characterRequest.getCharacterClass());
+        character.setName(characterRequest.getName());
+        character.setSpells(
+            characterRequest.getSpells().stream()
+                    .collect(Collectors.joining(","))
         );
+        var updatedCharacter = repository.save(character);
+
+        return ResponseEntity.ok(updatedCharacter);
     }
 
-    @DeleteMapping("/{id}")
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
+    @GetMapping("/characters/{id}")
+    ResponseEntity<Character> one(@PathVariable Long id) {
+        var character = repository.findById(id);
+        if (character.isEmpty()) {
+            throw new CharacterException(id);
+            //return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(character.get());
+    }
+
+    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
+    @RequestMapping(method = RequestMethod.DELETE, value = "/characters/{id}")
     void deleteCharacter(@PathVariable Long id) {
+        System.out.println("in delete route");
         repository.deleteById(id);
     }
 }

@@ -9,7 +9,7 @@ import {
   ISpell 
 } from '../../hooks/useSpellsFilter'
 import {
-  INewCharacter 
+  INewCharacter
 } from '../../queries/characterQuery'
 import {
   IClassQuery 
@@ -22,15 +22,21 @@ export interface IEditCharacterProps {
   mutateCharacters: UseMutationResult<void, Error, INewCharacter, unknown>;
   classQuery: UseQueryResult<IClassQuery, Error>;
   characterClass: string;
+  characterName: string;
+  spells: ISpell[];
+  id: string;
 }
 
 export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
   mutateCharacters,
   classQuery,
-  characterClass
+  characterClass,
+  characterName,
+  spells,
+  id,
 }) => {
-  const [currentName, setCurrentName] = useState('')
-  const [currentSpells, setCurrentSpells] = useState<ISpell[]>([])
+  const [currentName, setCurrentName] = useState(characterName || '')
+  const [currentSpells, setCurrentSpells] = useState<ISpell[]>(spells || [])
   const [currentClass, setCurrentClass] = useState(characterClass || 'Barbarian')
 
   const handleChange = 
@@ -129,7 +135,8 @@ export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
           spells: currentSpells.map(({
             identifier
           }) => identifier),
-          characterClass: currentClass
+          characterClass: currentClass,
+          id
         })}>
         {"Save Changes"}
       </button>

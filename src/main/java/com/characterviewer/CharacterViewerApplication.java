@@ -7,10 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import org.springframework.context.annotation.ComponentScan;
-
 @SpringBootApplication
 public class CharacterViewerApplication {
     private static final Logger log = LoggerFactory.getLogger(CharacterViewerApplication.class);
@@ -22,8 +18,8 @@ public class CharacterViewerApplication {
     @Bean
     public CommandLineRunner go(CharacterRepository repo) {
         return (args) -> {
-            repo.save(new Character("Alphonse"));
-            repo.save(new Character("Stradivarius"));
+            repo.save(new Character("Alphonse", "Sorcerer", "fireball,mage-hand"));
+            repo.save(new Character("Stradivarius", "Wizard", "lightning-bolt,fury-punch"));
             
             log.info("All characters found:");
             log.info("---------------------");
