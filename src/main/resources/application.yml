@@ -11,12 +11,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
   datasource:
-    # url: jdbc:h2:mem:charviewer
-    url: jdbc:postgresql://localhost:5432/characters
-    name: charactersuser
+    url: jdbc:h2:mem:charviewer
+    name: username
     password: password
+    #url: jdbc:postgresql://localhost:5432/characters
+    #name: charactersuser
+    #password: password
     # TODO look into issues with loading into heroku postgres instance
     #url: jdbc:postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
-    #url: jdbc:postgresql://ydwdojjllulmgk:cedae4c21b7d3c67f49cc18ef7346f076e9786526136fd4b7f760e5013bcacfa@ec2-3-93-206-109.compute-1.amazonaws.com:5432/d49tjbcvv153qf
     #name: ${DB_USER}
     #password: ${DB_PASSWORD}
