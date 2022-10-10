@@ -15,6 +15,9 @@ import {
 import {
   ISpell 
 } from "../../hooks/useSpellsFilter"
+import {
+  useQueryClient 
+} from "react-query"
 
 export interface ICharacterSelectProps {
   id: string,
@@ -30,8 +33,9 @@ export const SelectCharacter: React.FunctionComponent<ICharacterSelectProps> = (
   id,
 }) => { 
 
-  const mutateCharacters = useCharacterMutation()
-  const deleteCharacter = useDeleteCharacterQuery()
+  const queryClient = useQueryClient()
+  const mutateCharacters = useCharacterMutation(queryClient)
+  const deleteCharacter = useDeleteCharacterQuery(queryClient)
   const classQueryResult = useClassQuery()
 
   return (

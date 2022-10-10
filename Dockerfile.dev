@@ -1,0 +1,39 @@
+FROM ubuntu:latest
+
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk-headless \
+                    maven \
+                    software-properties-common \
+                    build-essential \
+                    curl
+
+WORKDIR /app
+ENV APP_ROOT=/app
+ENV APP_NAME="characterviewerapp"
+ENV PORT="8080"
+
+# Add java dependency file
+COPY ./pom.xml /app/pom.xml
+
+# install node and npm dependencies
+ARG NODE_VERSION=16.17.1
+ARG NODE_PACKAGE=node-v${NODE_VERSION}-linux-x64
+ARG NODE_HOME=/opt/${NODE_PACKAGE}
+ENV NODE_PATH ${NODE_HOME}/lib/node_modules
+ENV PATH ${NODE_HOME}/bin:$PATH
+
+RUN curl https://nodejs.org/dist/v$NODE_VERSION/$NODE_PACKAGE.tar.gz | tar -xzC /opt/
+
+# install npm deps and build
+COPY ./package.json /app/package.json
+COPY ./esbuild.config.js /app/esbuild.config.js
+COPY ./tsconfig.json /app/tsconfig.json
+COPY ./src /app/src/
+RUN npm --yes install
+# port and domain must be passed into webpack at compilation
+RUN PORT=${PORT} npm run dev
+
+# create java jar
+RUN mvn clean install
+
+CMD java -Dserver.port=${PORT} -jar /app/target/characterviewerapp.jar 

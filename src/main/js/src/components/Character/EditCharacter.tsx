@@ -9,7 +9,7 @@ import {
   ISpell 
 } from '../../hooks/useSpellsFilter'
 import {
-  INewCharacter 
+  INewCharacter
 } from '../../queries/characterQuery'
 import {
   IClassQuery 

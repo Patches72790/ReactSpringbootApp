@@ -41,8 +41,9 @@ public class CharacterController {
 
         Character newCharacter = new Character(name, charClass, spellString);
 
-        System.out.println(newCharacter);
         var characterResponse = repository.save(newCharacter);
+
+        System.out.println(characterResponse);
 
         return ResponseEntity.ok(characterResponse);
     }
@@ -59,7 +60,7 @@ public class CharacterController {
     ResponseEntity<Character> one(@PathVariable Long id) {
         var character = repository.findById(id);
         if (character.isEmpty()) {
-            throw new CharacterException();
+            throw new CharacterException(id);
             //return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(character.get());

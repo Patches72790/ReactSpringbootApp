@@ -1,4 +1,5 @@
 import {
+  QueryClient,
   useMutation,
   useQuery 
 } from 'react-query'
@@ -49,7 +50,7 @@ export interface INewCharacter {
     characterClass?: string;
 }
 
-const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
+const useCharacterMutation = (queryClient: QueryClient) => useMutation<void, Error, INewCharacter>(
   async ({
     name, 
     spells,
@@ -60,7 +61,7 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
         url: '/api/characters/',
         method: 'POST',
         headers: {
-        //'Accept': 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         data: {
@@ -72,20 +73,53 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
     )
       .then(({
         data 
-      }) => {
-        return data
-      })
+      }) => data)
+      .then(() => queryClient.invalidateQueries('characters'))
       .catch(() => console.error('Error uploading character')),
   {
     mutationKey: 'upload-character',
   }
 )
 
-export const useDeleteCharacterQuery = () => useMutation<void, Error, string>(
+const useCharacterUpdate = (queryClient: QueryClient) => useMutation<void, Error, INewCharacter>(
+  async ({
+    name, 
+    spells,
+    characterClass
+  }) => 
+    Axios.request( 
+      {
+        url: '/api/characters/',
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        data: {
+          name, 
+          spells,
+          characterClass
+        }
+      }
+    )
+      .then(({
+        data 
+      }) => data)
+      .then(() => queryClient.invalidateQueries('characters'))
+      .catch(() => console.error('Error uploading character')),
+  {
+    mutationKey: 'upload-character',
+  }
+)
+
+export const useDeleteCharacterQuery = (queryClient: QueryClient) => useMutation<void, Error, string>(
   async(
     id
   ) =>
-    Axios.delete(`/api/characters/${id}`),
+    Axios.delete(`/api/characters/${id}`)
+      .then(() => {
+        queryClient.invalidateQueries('characters')
+      }),
   {
     mutationKey: 'delete-character',
     onError: () => console.error('Error deleting character')

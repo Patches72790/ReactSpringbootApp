@@ -6,6 +6,9 @@ import {
 import {
   useCharacterQuery 
 } from '../queries/characterQuery'
+import {
+  NewCharacter 
+} from './Character/NewCharacter'
 
 export const App = () => {
 
@@ -34,11 +37,7 @@ export const App = () => {
           ))
         }
         </div>
-        <div className={'row'}>
-          <button className={'btn btn-primary'}>
-            {'New Character'}
-          </button>
-        </div>
+        <NewCharacter />
       </>
     )   
         
