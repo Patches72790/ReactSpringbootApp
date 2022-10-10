@@ -55,18 +55,21 @@ const useCharacterMutation = () => useMutation<void, Error, INewCharacter>(
     spells,
     characterClass
   }) => 
-    Axios.post('/api/characters/', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name, 
-        spells,
-        characterClass
-      }) 
-    })
+    Axios.request( 
+      {
+        url: '/api/characters/',
+        method: 'POST',
+        headers: {
+        //'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        data: {
+          name, 
+          spells,
+          characterClass
+        }
+      }
+    )
       .then(({
         data 
       }) => {
@@ -82,16 +85,7 @@ export const useDeleteCharacterQuery = () => useMutation<void, Error, string>(
   async(
     id
   ) =>
-    Axios.delete('/api/characters', {
-      method: 'delete',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      data: JSON.stringify({
-        id,
-      })
-    }),
+    Axios.delete(`/api/characters/${id}`),
   {
     mutationKey: 'delete-character',
     onError: () => console.error('Error deleting character')

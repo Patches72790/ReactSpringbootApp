@@ -31,11 +31,12 @@ public class CharacterController {
 
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     @PostMapping("/characters")
-    public ResponseEntity<Character> postCharacter(@RequestBody CharacterRequest charRequest) {
+    public ResponseEntity<Character> createNewCharacter(@RequestBody CharacterRequest charRequest) {
         ArrayList<String> spells = charRequest.getSpells();
         String name = charRequest.getName();
         String charClass = charRequest.getCharacterClass();
 
+        System.out.println(charRequest.getName());
         String spellString = spells.stream().collect(Collectors.joining(","));
 
         Character newCharacter = new Character(name, charClass, spellString);
@@ -48,7 +49,7 @@ public class CharacterController {
 
     @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     @PutMapping("/characters")
-    public Character newCharacter(@RequestBody CharacterRequest characterRequest) {
+    public Character updateCharacter(@RequestBody CharacterRequest characterRequest) {
 
         return new Character();
     }
@@ -58,7 +59,8 @@ public class CharacterController {
     ResponseEntity<Character> one(@PathVariable Long id) {
         var character = repository.findById(id);
         if (character.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            throw new CharacterException();
+            //return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(character.get());
     }

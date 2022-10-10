@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class HomeController {
     @GetMapping
-    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
+    //@CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin"})
     public String index() {
         return "index";
     }
