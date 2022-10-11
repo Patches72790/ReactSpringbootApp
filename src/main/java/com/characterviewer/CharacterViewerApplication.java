@@ -19,7 +19,8 @@ public class CharacterViewerApplication {
     public CommandLineRunner go(CharacterRepository repo) {
         return (args) -> {
             repo.save(new Character("Alphonse", "Sorcerer", "fireball,mage-hand"));
-            repo.save(new Character("Stradivarius", "Wizard", "lightning-bolt,fury-punch"));
+            repo.save(new Character("Stradivarius", "Wizard", "lightning-bolt,fire-bolt"));
+            repo.save(new Character("Theopompus", "Paladin", "warding-bond,heal,healing-word,heat-metal"));
             
             log.info("All characters found:");
             log.info("---------------------");

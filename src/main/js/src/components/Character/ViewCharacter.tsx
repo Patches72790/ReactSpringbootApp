@@ -2,13 +2,18 @@ import React, {
   useMemo 
 } from 'react'
 import {
+  useNavigate,
   useParams 
 } from 'react-router'
 import {
   useCharacterQuery 
 } from '../../queries/characterQuery'
+import {
+  SpellCards 
+} from '../Spells/SpellCards'
 
 export const ViewCharacter = () => {
+  const navigate = useNavigate()
   const params = useParams()
   const characters = useCharacterQuery()
 
@@ -19,25 +24,37 @@ export const ViewCharacter = () => {
       }) => name === params.charactername )
     
     return (
-      <div>
-        <p>
-          {character.name}
-        </p>
-        <p>
-          {character.characterClass}
-        </p>
-        <ul>
-          {
-            character.spells && character.spells.map(
-              (spell) => (
-                <li>
-                  {spell.name}
-                </li>
-              )
-            )
-          }
-        </ul>
-      </div>
+      <>
+        <div className={'mb-3 text-center'}>
+          <button 
+            onClick={() => navigate(-1)}
+            className={'btn btn-primary text'}
+          >
+            {'Go Back'}
+          </button>
+        </div>
+        <div className={"row mb-3"}>
+          <div className="col">
+            <h3>
+              {character.name}
+            </h3>
+            <h5>
+              {character.characterClass}
+            </h5>
+          </div>
+          <img 
+            className="col rounded float-end"
+            style={{
+              maxWidth: '15%',
+              height: 'auto'
+            }}
+            src={`/${character.characterClass}.png`} 
+          />
+        </div>
+        <SpellCards 
+          spells={character.spells}
+        />
+      </>
     )
 
   }, [])

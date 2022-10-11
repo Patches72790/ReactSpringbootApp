@@ -20,7 +20,7 @@ export const App = () => {
         <h1 className="display-4 title-text"> 
           {"Character Viewer and Spell Tracker"} 
         </h1>
-        <div className="character-list list-group container"> {
+        <div className="character-list list-group container mb-3"> {
           characterQuery.data.map(({
             name,
             characterClass,
