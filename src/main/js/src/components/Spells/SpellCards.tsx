@@ -41,17 +41,19 @@ export const SpellCards: React.FunctionComponent<ISpellCardProps> = ({
               <div
                 className={"card mb-3"}
                 style={{
-                  maxWidth: '18rem'
+                  maxWidth: '18rem',
+                  maxHeight: '18rem',
+                  overflow: 'auto'
                 }}
               >
                 <div
-                  className={'card-body overflow-auto'}
+                  className={'card-body'}
                 >
                   <h5 className={'card-title'}>
                     {name}
                   </h5>
-                  <p className={'card-text'}>{`Spell Level: ${level}`}</p>
-                  <p className={'card-text'}>{`Description: ${desc}`}</p>
+                  <p className={'card-text fs-6'}>{`Spell Level: ${level}`}</p>
+                  <p className={'card-text fs-6'}>{`Description: ${desc}`}</p>
                 </div>
               </div>
             </div>

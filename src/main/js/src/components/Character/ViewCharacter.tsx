@@ -2,6 +2,7 @@ import React, {
   useMemo 
 } from 'react'
 import {
+  useNavigate,
   useParams 
 } from 'react-router'
 import {
@@ -12,6 +13,7 @@ import {
 } from '../Spells/SpellCards'
 
 export const ViewCharacter = () => {
+  const navigate = useNavigate()
   const params = useParams()
   const characters = useCharacterQuery()
 
@@ -23,6 +25,14 @@ export const ViewCharacter = () => {
     
     return (
       <>
+        <div className={'mb-3 text-center'}>
+          <button 
+            onClick={() => navigate(-1)}
+            className={'btn btn-primary text'}
+          >
+            {'Go Back'}
+          </button>
+        </div>
         <div className={"row mb-3"}>
           <div className="col">
             <h3>
