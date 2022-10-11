@@ -9,7 +9,7 @@ import {
 } from '../../queries/characterQuery'
 import {
   SpellCards 
-} from '../Spells/SpellCard'
+} from '../Spells/SpellCards'
 
 export const ViewCharacter = () => {
   const params = useParams()

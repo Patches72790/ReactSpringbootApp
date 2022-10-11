@@ -16,7 +16,7 @@ import {
 } from '../../queries/classQuery'
 import {
   SelectSpells
-} from './SelectSpells'
+} from '../Spells/SelectSpells'
 
 export interface IEditCharacterProps {
   mutateCharacters: UseMutationResult<void, Error, INewCharacter, unknown>;

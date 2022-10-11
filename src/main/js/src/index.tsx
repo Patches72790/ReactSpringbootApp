@@ -3,8 +3,11 @@ import {
   createRoot 
 } from "react-dom/client"
 import {
-  QueryClient, QueryClientProvider 
+  QueryClient, QueryClientProvider
 } from "react-query"
+import {
+  ReactQueryDevtools 
+} from 'react-query/devtools'
 import {
   App 
 } from "./components/App"
@@ -38,6 +41,7 @@ const AppWrap = () => (
     <div className="container">
       <RouterProvider router={router} />
     </div>
+    <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>
 )
 
