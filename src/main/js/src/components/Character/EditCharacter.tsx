@@ -72,7 +72,7 @@ export const EditCharacter: React.FunctionComponent<IEditCharacterProps> = ({
   return (
     <div className="add-character">
       <form>
-        <div className={"row input-group mb-3"}>
+        <div className={"row input-group mb-3 mt-3"}>
           <input 
             type={"text"} 
             value={currentName} 

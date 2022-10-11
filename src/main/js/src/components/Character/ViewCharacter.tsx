@@ -7,6 +7,9 @@ import {
 import {
   useCharacterQuery 
 } from '../../queries/characterQuery'
+import {
+  SpellCards 
+} from '../Spells/SpellCard'
 
 export const ViewCharacter = () => {
   const params = useParams()
@@ -19,25 +22,29 @@ export const ViewCharacter = () => {
       }) => name === params.charactername )
     
     return (
-      <div>
-        <p>
-          {character.name}
-        </p>
-        <p>
-          {character.characterClass}
-        </p>
-        <ul>
-          {
-            character.spells && character.spells.map(
-              (spell) => (
-                <li>
-                  {spell.name}
-                </li>
-              )
-            )
-          }
-        </ul>
-      </div>
+      <>
+        <div className={"row mb-3"}>
+          <div className="col">
+            <h3>
+              {character.name}
+            </h3>
+            <h5>
+              {character.characterClass}
+            </h5>
+          </div>
+          <img 
+            className="col rounded float-end"
+            style={{
+              maxWidth: '15%',
+              height: 'auto'
+            }}
+            src={`/${character.characterClass}.png`} 
+          />
+        </div>
+        <SpellCards 
+          spells={character.spells}
+        />
+      </>
     )
 
   }, [])

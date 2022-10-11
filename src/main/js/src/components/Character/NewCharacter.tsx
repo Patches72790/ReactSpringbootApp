@@ -28,7 +28,7 @@ export const NewCharacter = () => {
         {'New Character'}
       </button>
       <div 
-        className={'collapse row'}
+        className={'collapse row mt-5'}
         id={'collapseNewCharacter'}
       >
         <EditCharacter 
