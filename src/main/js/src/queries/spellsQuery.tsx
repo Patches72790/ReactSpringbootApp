@@ -74,7 +74,7 @@ const useSpellFactsQueries = (spells: ISpell[]) => useQueries<SpellFactsQueries>
       onError: () => console.error(`Error getting spell fact data for spell index ${identifier}`)
     })
   )
-).map(queryResult => queryResult)
+)
 
 export {
   useSpellQuery,
