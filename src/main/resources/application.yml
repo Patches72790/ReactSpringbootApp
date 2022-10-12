@@ -3,7 +3,7 @@ spring:
     port: ${PORT:8080}
   application:
     name: CharacterViewerApp
-# examples to add datasource for db uri
+  # TODO settings for adjusting postgres dialect
   #  jpa:
   #    hibernate:
   #      ddl-auto: update
@@ -14,6 +14,7 @@ spring:
     url: jdbc:h2:mem:charviewer
     name: username
     password: password
+    # TODO Use for local database instance
     #url: jdbc:postgresql://localhost:5432/characters
     #name: charactersuser
     #password: password

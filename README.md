@@ -12,8 +12,8 @@ This application uses the following web stack to serve its purposes:
 
 ### List of Features
 
-*   \[ ] Java Rest API for storing and retrieving character sheet data for users
-*   \[ ] TypeScript front end interface for viewing different characters and adding new characters
-*   \[ ] Accesses external D\&D API for accessing character data, classes, spells, etc.
-*   \[x] Automated deployment and docker containerization locally and remotely
-*   \[ ] Testing for different backend routes and front end interface
+*    Java Rest API for storing and retrieving character sheet data for users
+*    TypeScript front end interface for viewing different characters and adding new characters
+*    Accesses external D\&D API for accessing character data, classes, spells, etc.
+*    Automated deployment and docker containerization locally and remotely
+*    Testing for different backend routes and front end interface

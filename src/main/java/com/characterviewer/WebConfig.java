@@ -17,6 +17,9 @@ public class WebConfig extends WebMvcConfigurationSupport {
         // Multi-level directory path, need to exclude "api" on the first part of the path
         registry.addViewController("/{x:^(?!api$).*$}/**/{y:[\\w\\-]+}")
                 .setViewName("forward:/index");
+        
+        // todo need to figure out how to map requests other than 
+        // index and static files and api to index.html
     }
 
     @Override

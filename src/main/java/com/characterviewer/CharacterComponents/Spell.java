@@ -11,6 +11,8 @@ public class Spell implements Serializable {
     @GeneratedValue
     private Long id;
     private String name;
+    // todo need to setup this entity as a join column
+    // with character as a manytomany
 
     public Spell() {
         this.name = "";

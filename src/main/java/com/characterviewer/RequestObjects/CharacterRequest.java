@@ -2,12 +2,10 @@ package com.characterviewer.RequestObjects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CharacterRequest implements Serializable {
-
     @JsonProperty("id")
     private Long id;
 
@@ -35,9 +33,6 @@ public class CharacterRequest implements Serializable {
         this.characterClass = characterClass;
         this.spells = spells;
         this.id = id;
-
-        System.out.println("\n\n the name and character class ");
-        System.out.printf("%s, %s", name, characterClass);
     }
 
     public String getName() {
