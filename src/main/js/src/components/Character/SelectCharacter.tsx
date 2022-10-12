@@ -3,7 +3,6 @@ import {
   EditCharacter 
 } from './EditCharacter'
 import {
-  useCharacterMutation,
   useCharacterUpdate,
   useDeleteCharacterQuery
 } from '../../queries/characterQuery'

@@ -43,7 +43,7 @@ export const SelectSpells: React.FunctionComponent<ISelectSpellsProps> =
           {(spells?.length 
             && filterInput.length 
             && (spells
-              .slice(0, 10) // limit to 10 results
+              .slice(0, 10) // TODO allow users to set their own limit to results
               .map(({
                 name,
                 identifier
